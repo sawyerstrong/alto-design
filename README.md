@@ -8,7 +8,7 @@ page per organ, and the glossary. It holds no code. The project's source, specs 
 are in a separate private repository. Citations to them in these pages link there, pinned to
 commit `e6c6890e`, and open only for people signed in to GitHub with access to it.
 
-Snapshot of source commit `d7b4c79` (2026-09-29). Do not edit `docs/` here: the next
+Snapshot of source commit `0ab79ac` (2026-09-30). Do not edit `docs/` here: the next
 export overwrites it.
 
 ## Build locally

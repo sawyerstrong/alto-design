@@ -39,8 +39,8 @@ pages keep them apart.
 
 **Four things the picture is saying.** Intake **fans out in parallel** to three peers, and
 everything downstream consumes its percept rather than the raw words. Integration is
-**sealed** between the Surfacer and the Articulator — it sees thoughts, never machinery, which
-is what makes honesty structural rather than instructed. The Writer is a **sibling, not a
+**sealed** between the Surfacer and the Articulator, which the picture leaves out (see below): it
+sees thoughts, never machinery, which is what makes honesty structural rather than instructed. The Writer is a **sibling, not a
 subordinate**, hanging off that fan-out on the cold path. And the design has **one door into
 memory**: nothing reaches long-term storage around the shared read layer. (Built, that door is
 two — see [Retrieval](organs/retrieval.md).)
@@ -68,6 +68,10 @@ two — see [Retrieval](organs/retrieval.md).)
 The last three are not boxes in the diagram, deliberately. **Identity** is not a component —
 it appears only as the self-node inside the graph, which is the claim. The **guard** and
 **Processing** are below the altitude of an orientation map; both have pages.
+
+The **Articulator** is left out too. Its page says designed, zero code, so the picture runs
+Integration straight into the Renderer. The design puts the Articulator between them, so that
+Integration never assembles the bundle and never learns that one exists.
 
 ---
 

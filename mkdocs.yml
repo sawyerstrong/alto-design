@@ -27,13 +27,13 @@ theme:
 
 plugins:
   - search
-  # Click an image to open it full size, with zoom and drag. The organ map is 1884 px wide and
-  # the page column is about half that, so the labels are unreadable without it.
-  - glightbox:
-      zoomable: true
-      draggable: true
-      touchNavigation: true
-      auto_caption: false
+
+# Click an image to open a viewer with wheel zoom, drag to pan and buttons (zoom.js). The organ map is
+# 3736 px wide and the page column is about a quarter of that, so its labels need it.
+extra_javascript:
+  - javascripts/zoom.js
+extra_css:
+  - stylesheets/zoom.css
 
 markdown_extensions:
   - tables
