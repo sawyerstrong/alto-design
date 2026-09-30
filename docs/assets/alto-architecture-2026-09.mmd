@@ -10,7 +10,7 @@ flowchart TB
   IN["<b>INTEGRATION</b><br/><i>the conscious locus</i><br/>thinks · decides · forms intent"]
   PR["<b>Processing</b><br/>reasons on demand<br/><i>unbuilt</i>"]
 
-  R["<b>Renderer</b><br/><i>this is Alto's voice</i>"]
+  R["<b>Renderer</b><br/><i>says Integration's words</i>"]
 
   GUARD{{"<b>The guard</b><br/>registry + allowlist<br/><i>no tools registered today</i>"}}
   HA(["Home Assistant"])
@@ -52,7 +52,7 @@ flowchart TB
   SUB -.->|"salience: what to bubble up"| SURF
 
   IN -->|when needed| PR -.-> IN
-  IN ==>|intent| R ==>|speech| world
+  IN ==>|spoken words| R ==>|speech| world
   R -.->|hears itself| P
   IN -.->|"tool call (no tools registered)"| GUARD -->|validated tuple only| HA
 
