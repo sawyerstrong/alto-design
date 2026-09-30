@@ -10,7 +10,6 @@ flowchart TB
   IN["<b>INTEGRATION</b><br/><i>the conscious locus</i><br/>thinks · decides · forms intent"]
   PR["<b>Processing</b><br/>reasons on demand<br/><i>unbuilt</i>"]
 
-  ART["<b>Articulator</b><br/>intent &rarr; bundle<br/><i>unbuilt</i>"]
   R["<b>Renderer</b><br/><i>this is Alto's voice</i>"]
 
   GUARD{{"<b>The guard</b><br/>registry + allowlist<br/><i>no tools registered today</i>"}}
@@ -53,7 +52,7 @@ flowchart TB
   SUB -.->|"salience: what to bubble up"| SURF
 
   IN -->|when needed| PR -.-> IN
-  IN ==>|intent| ART --> R ==>|speech| world
+  IN ==>|intent| R ==>|speech| world
   R -.->|hears itself| P
   IN -.->|"tool call (no tools registered)"| GUARD -->|validated tuple only| HA
 
@@ -81,7 +80,7 @@ flowchart TB
 
   class IN conscious; class R voice; class SUB sub;
   class P machine; class I machine; class SURF machine;
-  class PR unbuilt; class ART unbuilt; class CON unbuilt;
+  class PR unbuilt; class CON unbuilt;
   class REC writer;
   class GRAPH brain; class AFF brain; class PROJ brain;
   class L1 brain; class TX3 brain; class BOOK brain;
