@@ -57,7 +57,7 @@ reaches Integration only as thoughts the Surfacer renders.
 | [Subconscious](organs/subconscious.md) | continuous endogenous state; salience to the Surfacer, steering into Integration | decay tick only — the loop is the master dependency |
 | [Integration](organs/integration.md) | the one conscious locus: thinks, forms intentions | the organ runs; the layer around it does not, so it is exposed |
 | [Surfacer](organs/surfacer.md) | machinery → first-person thought, *up* | rendering half only; reads `alto_mem` |
-| [Renderer](organs/renderer.md) | bundle → speech. Alto's voice | built and on |
+| [Renderer](organs/renderer.md) | picks up Integration's spoken words and says them — a shell until there is a tone organ | built and on |
 | [Action organ](organs/action.md) | intent → validated device calls | sketched; the channel into it ships |
 | [Processing](organs/processing.md) | reasons on demand, returns conclusions | only the web-search seam |
 | [Writer](organs/writer.md) | persists experience to memory, mood-blind | recorder built; most of it switched off |
@@ -94,5 +94,5 @@ concluding something is undesigned, read its page.
 | What does a word mean here? | [GLOSSARY.md](GLOSSARY.md) |
 
 Pages cite code, specs, dated records and pull requests by path. Each citation that exists in
-the private repository, at commit `431d2c9c`, links to it there. Those links open only if
+the private repository, at commit `ec6be39e`, links to it there. Those links open only if
 you are signed in to GitHub with access to that repository; anyone else gets a 404.
