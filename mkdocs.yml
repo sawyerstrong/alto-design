@@ -1,0 +1,60 @@
+site_name: Alto — design
+site_description: The design of Alto, a local-first voice assistant built as a research program on machine interiority.
+site_url: https://sawyerstrong.github.io/alto-design/
+repo_url: https://github.com/sawyerstrong/alto-design
+edit_uri: ""
+docs_dir: docs
+strict: true
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+markdown_extensions:
+  - tables
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+nav:
+  - Home: index.md
+  - The pillars: PILLARS.md
+  - The organs:
+      - Map: THE-ORGANS.md
+      - Perception: organs/perception.md
+      - Intake: organs/intake.md
+      - Subconscious: organs/subconscious.md
+      - Integration: organs/integration.md
+      - Surfacer: organs/surfacer.md
+      - Articulator: organs/articulator.md
+      - Renderer: organs/renderer.md
+      - Action: organs/action.md
+      - Processing: organs/processing.md
+      - Writer: organs/writer.md
+      - Retrieval: organs/retrieval.md
+      - Identity: organs/identity.md
+      - Safety boundary: organs/safety-boundary.md
+  - Glossary: GLOSSARY.md

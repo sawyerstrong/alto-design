@@ -1,0 +1,90 @@
+flowchart TB
+  world(["Person / World"])
+
+  P["<b>Perception</b><br/>hears<br/><i>audio only today</i>"]
+  I["<b>Intake</b><br/><i>faithful extraction · doesn't infer</i><br/>fans out per-percept"]
+
+  SUB["<b>Subconscious</b><br/><i>continuous · maintains and signals</i><br/>affect · drives · activation<br/><b>never reasons, never reads the graph</b>"]
+  SURF["<b>Surfacer</b><br/>substrate &rarr; first-person thought<br/><i>reads the store · runs a model</i>"]
+
+  IN["<b>INTEGRATION</b><br/><i>the conscious locus</i><br/>thinks · decides · forms intent"]
+  PR["<b>Processing</b><br/>reasons on demand<br/><i>unbuilt</i>"]
+
+  ART["<b>Articulator</b><br/>intent &rarr; bundle<br/><i>unbuilt</i>"]
+  R["<b>Renderer</b><br/><i>this is Alto's voice</i>"]
+
+  GUARD{{"<b>The guard</b><br/>registry + allowlist<br/><i>no tools registered today</i>"}}
+  HA(["Home Assistant"])
+
+  REC["<b>Live Recorder</b><br/><i>cold path · concurrent</i><br/>episode + immediate valence<br/><b>current-mood-blind</b>"]
+  CON["<b>Consolidator</b><br/><i>cold path · sleep-time</i><br/>aggregate affect · beliefs · pruning<br/><i>unbuilt</i>"]
+
+  READ["<b>Shared Graph-Read / Cache</b><br/><i>one layer, peer clients</i>"]
+
+  subgraph LTM["<b>Long-term memory</b>"]
+    direction TB
+
+    subgraph MEMDB["<b>alto_mem</b> — the writer's store"]
+      direction LR
+      L0["<b>L0 · testimony</b> &nbsp;<i>the only precious layer</i><br/>episode · segment"]
+      L1["<b>L1 · surfaces, lines, mentions</b><br/>surface · line · mention"]
+      TX3["<b>episode-close artefacts</b><br/>binding · cooccurrence"]
+      BOOK["<b>bookkeeping &amp; repair</b><br/>watermark · enrich_failure · line_embedding<br/><i>retraction · belief_confidence — empty by design</i>"]
+      L0 --> L1 --> TX3
+    end
+
+    subgraph BRAINDB["<b>alto_dev</b> — the project brain (Postgres + AGE)"]
+      direction LR
+      GRAPH["<b>alto_graph</b> &nbsp;<i>AGE property graph</i><br/>episodes · entities · <b>the self-node</b> · edges"]
+      AFF["<b>affect</b><br/>emotional_state · baseline · injections"]
+      PROJ["<b>project brain</b> <i>(Track A)</i><br/>projects · events · blockers"]
+    end
+  end
+
+  world -->|percepts| P --> I
+  I ==>|"parallel: to feel"| SUB
+  I ==>|"parallel: to attend"| IN
+  I ==>|"parallel: to render"| SURF
+  I -.->|to record| REC
+
+  SURF ==>|thoughts surface| IN
+  SUB -.->|steering tilts cognition| IN
+  SUB -.->|colors / twitch| R
+  SUB -.->|"salience: what to bubble up"| SURF
+
+  IN -->|when needed| PR -.-> IN
+  IN ==>|intent| ART --> R ==>|speech| world
+  R -.->|hears itself| P
+  IN -.->|"tool call (no tools registered)"| GUARD -->|validated tuple only| HA
+
+  REC -->|writes| L0
+  CON -->|reorganizes| GRAPH
+  SUB -.->|salience hints| REC
+  SUB <-->|"working state (not the graph)"| AFF
+  READ --- GRAPH
+  READ --- MEMDB
+  SURF -->|"reads to render"| READ
+  REC -.->|reads to record| READ
+  CON -.->|reads to reorganize| READ
+  IN -.->|retrieval| READ
+
+  classDef conscious fill:#fff,stroke:#9A5B34,stroke-width:4px,color:#1c1916;
+  classDef machine fill:#fff,stroke:#555,stroke-width:2px,color:#1c1916;
+  classDef voice fill:#fff,stroke:#8c2f3f,stroke-width:3px,color:#1c1916;
+  classDef sub fill:#2C4A5A,stroke:#1b3340,stroke-width:2px,color:#eaf4f8;
+  classDef writer fill:#3d4a3a,stroke:#26301f,stroke-width:2px,color:#eaf4e8;
+  classDef brain fill:#efe9dd,stroke:#4A4A52,stroke-width:2px,color:#1c1916,stroke-dasharray:5 4;
+  classDef read fill:#e6ecef,stroke:#4A5A66,stroke-width:1.5px,color:#1c1916;
+  classDef precious fill:#efe9dd,stroke:#8c2f3f,stroke-width:3px,color:#1c1916;
+  classDef guard fill:#fff,stroke:#8c2f3f,stroke-width:3px,color:#1c1916;
+  classDef unbuilt fill:#fff,stroke:#999,stroke-width:2px,color:#555,stroke-dasharray:4 4;
+
+  class IN conscious; class R voice; class SUB sub;
+  class P machine; class I machine; class SURF machine;
+  class PR unbuilt; class ART unbuilt; class CON unbuilt;
+  class REC writer;
+  class GRAPH brain; class AFF brain; class PROJ brain;
+  class L1 brain; class TX3 brain; class BOOK brain;
+  class L0 precious;
+  class READ read; class GUARD guard;
+  class world machine; class HA machine;

@@ -1,0 +1,99 @@
+flowchart LR
+
+  subgraph CONT["&nbsp;CONTINUOUS &nbsp;·&nbsp; between turns, on its own clock&nbsp;"]
+    direction LR
+    SUB["<b>Subconscious</b><br/>affect · drives · activation<br/><i>maintains and signals</i>"]
+  end
+
+  subgraph HOT["&nbsp;HOT &nbsp;·&nbsp; during a turn, someone is waiting&nbsp;"]
+    direction LR
+    subgraph PERC["&nbsp;Perception &nbsp;·&nbsp; modality modules&nbsp;"]
+      direction TB
+      HEAR["<b>hearing</b><br/><i>speech → text</i>"]
+      SEE["<b>vision</b><br/><i>scene · faces · activity</i><br/><i>frame discarded at once</i>"]
+    end
+    I["<b>Intake</b><br/><i>faithful · doesn't infer</i>"]
+
+    subgraph LOCUS["&nbsp;the conscious boundary&nbsp;"]
+      direction TB
+      SURF["<b>Surfacer</b><br/><i>up: machinery → thought</i>"]
+      IN["<b>INTEGRATION</b><br/><i>the conscious locus</i><br/><i>sees thoughts, never machinery</i>"]
+      ART["<b>Articulator</b><br/><i>down: intent → bundle</i>"]
+      SURF ==> IN ==> ART
+    end
+
+    R["<b>Renderer</b><br/><i>Alto speaks</i>"]
+    ACT["<b>Action organ</b><br/><i>intent → validated device calls</i><br/><i>owns the tools, behind the guard</i>"]
+
+    HEAR --> I
+    SEE --> I
+    ART ==> R
+  end
+
+  subgraph COLD["&nbsp;COLD &nbsp;·&nbsp; after the turn, off the hot GPU&nbsp;"]
+    direction LR
+    W["<b>Writer</b><br/><i>mood-blind</i><br/>recorder · consolidator"]
+  end
+
+  READ["<b>Shared read / cache</b><br/><i>the one door into memory</i>"]
+
+  subgraph LTM["&nbsp;LONG-TERM MEMORY&nbsp;"]
+    direction LR
+    subgraph MEM["&nbsp;alto_mem &nbsp;·&nbsp; the writer's store&nbsp;"]
+      direction TB
+      L0["<b>L0 · testimony</b><br/><i>the only precious layer</i>"]
+      DER["derived layers<br/><i>rebuildable from L0</i>"]
+      L0 --> DER
+    end
+    subgraph BRAIN["&nbsp;alto_dev &nbsp;·&nbsp; the brain&nbsp;"]
+      direction TB
+      GRAPH["<b>alto_graph</b> <i>(AGE)</i><br/>entities · the self-node"]
+      BELIEF["<b>beliefs · dispositions</b><br/><i>domain · confidence · provenance</i>"]
+      REL["affect · projects"]
+    end
+  end
+
+  I ==>|to attend| IN
+  I ==>|to render| SURF
+  I ==>|to feel| SUB
+  I ==>|to record| W
+
+  SUB -.->|steering| IN
+  SUB -.->|salience: what bubbles up| SURF
+  IN -.->|⟦act⟧ intent| ACT
+
+  W ==>|writes| L0
+  W -.->|consolidation promotes| BELIEF
+  SUB <-.->|working state| REL
+  SURF -->|reads| READ
+  IN -.->|retrieval| READ
+  W -.->|reads| READ
+  READ === LTM
+
+  classDef conscious fill:#fff,stroke:#9A5B34,stroke-width:4px,color:#1c1916;
+  classDef machine fill:#fff,stroke:#555,stroke-width:2px,color:#1c1916;
+  classDef voice fill:#fff,stroke:#8c2f3f,stroke-width:3px,color:#1c1916;
+  classDef sub fill:#2C4A5A,stroke:#1b3340,stroke-width:2px,color:#eaf4f8;
+  classDef writer fill:#3d4a3a,stroke:#26301f,stroke-width:2px,color:#eaf4e8;
+  classDef brain fill:#efe9dd,stroke:#4A4A52,stroke-width:2px,color:#1c1916,stroke-dasharray:5 4;
+  classDef read fill:#e6ecef,stroke:#4A5A66,stroke-width:1.5px,color:#1c1916;
+  classDef precious fill:#efe9dd,stroke:#8c2f3f,stroke-width:3px,color:#1c1916;
+  classDef unbuilt fill:#fff,stroke:#999,stroke-width:2px,color:#666,stroke-dasharray:4 4;
+  classDef guard fill:#fff,stroke:#8c2f3f,stroke-width:3px,color:#1c1916;
+
+  class IN conscious; class R voice; class SUB sub; class W writer;
+  class HEAR machine; class I machine; class SURF machine;
+  class SEE unbuilt;
+  class ART unbuilt; class ACT unbuilt;
+  class GRAPH brain; class REL brain; class DER brain;
+  class BELIEF unbuilt;
+  class L0 precious; class READ read;
+
+  style HOT fill:#fdfbf7,stroke:#9A5B34,stroke-width:2px
+  style CONT fill:#f2f6f8,stroke:#2C4A5A,stroke-width:2px
+  style COLD fill:#f4f6f2,stroke:#3d4a3a,stroke-width:2px
+  style LTM fill:#fbf9f2,stroke:#4A4A52,stroke-width:2px
+  style PERC fill:#fff,stroke:#555,stroke-width:1px,stroke-dasharray:4 3
+  style LOCUS fill:#fff,stroke:#9A5B34,stroke-width:1px,stroke-dasharray:4 3
+  style MEM fill:#fff,stroke:#8c2f3f,stroke-width:1px,stroke-dasharray:4 3
+  style BRAIN fill:#fff,stroke:#4A4A52,stroke-width:1px,stroke-dasharray:4 3
