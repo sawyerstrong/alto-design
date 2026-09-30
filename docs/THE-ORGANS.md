@@ -39,8 +39,8 @@ pages keep them apart.
 
 **Four things the picture is saying.** Intake **fans out in parallel** to three peers, and
 everything downstream consumes its percept rather than the raw words. Integration is
-**sealed** between the Surfacer and the Articulator — it sees thoughts, never machinery, which
-is what makes honesty structural rather than instructed. The Writer is a **sibling, not a
+**sealed** between the Surfacer and the Articulator, which the picture leaves out (see below): it
+sees thoughts, never machinery, which is what makes honesty structural rather than instructed. The Writer is a **sibling, not a
 subordinate**, hanging off that fan-out on the cold path. And the design has **one door into
 memory**: nothing reaches long-term storage around the shared read layer. (Built, that door is
 two — see [Retrieval](organs/retrieval.md).)
@@ -69,6 +69,10 @@ The last three are not boxes in the diagram, deliberately. **Identity** is not a
 it appears only as the self-node inside the graph, which is the claim. The **guard** and
 **Processing** are below the altitude of an orientation map; both have pages.
 
+The **Articulator** is left out too. Its page says designed, zero code, so the picture runs
+Integration straight into the Renderer. The design puts the Articulator between them, so that
+Integration never assembles the bundle and never learns that one exists.
+
 ---
 
 ## Before you read the pages
@@ -90,5 +94,5 @@ concluding something is undesigned, read its page.
 | What does a word mean here? | [GLOSSARY.md](GLOSSARY.md) |
 
 Pages cite code, specs, dated records and pull requests by path. Each citation that exists in
-the private repository, at commit `e6c6890e`, links to it there. Those links open only if
+the private repository, at commit `c01cf084`, links to it there. Those links open only if
 you are signed in to GitHub with access to that repository; anyone else gets a 404.

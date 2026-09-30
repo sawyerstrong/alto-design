@@ -1,10 +1,5 @@
 flowchart LR
 
-  subgraph CONT["&nbsp;CONTINUOUS &nbsp;·&nbsp; between turns, on its own clock&nbsp;"]
-    direction LR
-    SUB["<b>Subconscious</b><br/>affect · drives · activation<br/><i>maintains and signals</i>"]
-  end
-
   subgraph HOT["&nbsp;HOT &nbsp;·&nbsp; during a turn, someone is waiting&nbsp;"]
     direction LR
     subgraph PERC["&nbsp;Perception &nbsp;·&nbsp; modality modules&nbsp;"]
@@ -18,8 +13,7 @@ flowchart LR
       direction TB
       SURF["<b>Surfacer</b><br/><i>up: machinery → thought</i>"]
       IN["<b>INTEGRATION</b><br/><i>the conscious locus</i><br/><i>sees thoughts, never machinery</i>"]
-      ART["<b>Articulator</b><br/><i>down: intent → bundle</i>"]
-      SURF ==> IN ==> ART
+      SURF ==> IN
     end
 
     R["<b>Renderer</b><br/><i>Alto speaks</i>"]
@@ -27,7 +21,12 @@ flowchart LR
 
     HEAR --> I
     SEE --> I
-    ART ==> R
+    IN ==> R
+  end
+
+  subgraph CONT["&nbsp;CONTINUOUS &nbsp;·&nbsp; between turns, on its own clock&nbsp;"]
+    direction LR
+    SUB["<b>Subconscious</b><br/>affect · drives · activation<br/><i>maintains and signals</i>"]
   end
 
   subgraph COLD["&nbsp;COLD &nbsp;·&nbsp; after the turn, off the hot GPU&nbsp;"]
@@ -57,8 +56,9 @@ flowchart LR
   I ==>|to render| SURF
   I ==>|to feel| SUB
   I ==>|to record| W
+  IN -->|its reply| W
 
-  SUB -.->|steering| IN
+  SUB -.->|affect · steering| IN
   SUB -.->|salience: what bubbles up| SURF
   IN -.->|⟦act⟧ intent| ACT
 
@@ -66,7 +66,6 @@ flowchart LR
   W -.->|consolidation promotes| BELIEF
   SUB <-.->|working state| REL
   SURF -->|reads| READ
-  IN -.->|retrieval| READ
   W -.->|reads| READ
   READ === LTM
 
@@ -84,7 +83,7 @@ flowchart LR
   class IN conscious; class R voice; class SUB sub; class W writer;
   class HEAR machine; class I machine; class SURF machine;
   class SEE unbuilt;
-  class ART unbuilt; class ACT unbuilt;
+  class ACT unbuilt;
   class GRAPH brain; class REL brain; class DER brain;
   class BELIEF unbuilt;
   class L0 precious; class READ read;

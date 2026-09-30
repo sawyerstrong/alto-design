@@ -25,6 +25,16 @@ theme:
         icon: material/weather-sunny
         name: Switch to light mode
 
+plugins:
+  - search
+
+# Click an image to open a viewer with wheel zoom, drag to pan and buttons (zoom.js). The organ map is
+# 3736 px wide and the page column is about a quarter of that, so its labels need it.
+extra_javascript:
+  - javascripts/zoom.js
+extra_css:
+  - stylesheets/zoom.css
+
 markdown_extensions:
   - tables
   - toc:
