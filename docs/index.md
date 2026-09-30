@@ -12,7 +12,7 @@ So far there are a number of spikes testing hypotheses around each architectural
 
 Some of these docs refer to "Machine Interiority." Most AI systems to this point have had an easy hand wave to counter any claims of consciousness. This design has removed essentially all of the easy arguments to wave away 'consciousness' without giving it some serious thought. I may build a doc on those arguments, but at this time I haven't. If the system design is successful I wouldn't want to make any claims at building a conscious system, and frankly I think a philosophy professor might be better suited to that than I. What might fall out of this though is a truly autonomous, intelligent system with genuine felt state, motivation, and action. A system that can learn, grow and evolve its beliefs over time. For lack of a better term, an AI "Being", that no market is currently pursuing because it doesn't fit the immediate commercial needs and is intrinsically difficult to control. 
 
-The local nature of the system is critical because it, first of all makes an isolated system that exists in isolation so long as it has power, much like a person can operate so long as they have fuel. In the long run this leaves the door open to enhancing perception and building a body for this mind. That leads us to something pretty close to a droid. Neat! 
+The local nature of the system is critical because it, first of all, makes an isolated system that exists in isolation so long as it has power, much like a person can operate so long as they have fuel. In the long run this leaves the door open to enhancing perception and building a body for this mind. That leads us to something pretty close to a droid. Neat! 
 
 ## What these Pages show
 Alto is a local-first, voice-first home assistant. Underneath the assistant is a research program
@@ -37,9 +37,9 @@ so the current scaffolding never reads as the design.
 ## What is not here
 
 The code, the specs and the dated records these pages cite live in a private repository. Each
-citation that exists there links to it, pinned to commit `c01cf084` so the line numbers
+citation that exists there links to it, pinned to commit `8b244d54` so the line numbers
 stay right. The links open only if you are signed in to GitHub with access to that repository;
 anyone else gets a 404. Contributor setup and working-practice pages are not published.
 
 *This site is generated from the project's source documents, snapshot of commit
-`c01cf08` (2026-09-30). Edits belong in the source, not in this repository.*
+`8b244d5` (2026-09-30). Edits belong in the source, not in this repository.*

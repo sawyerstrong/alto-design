@@ -39,8 +39,8 @@ pages keep them apart.
 
 **Four things the picture is saying.** Intake **fans out in parallel** to three peers, and
 everything downstream consumes its percept rather than the raw words. Integration is
-**sealed** between the Surfacer and the Articulator, which the picture leaves out (see below): it
-sees thoughts, never machinery, which is what makes honesty structural rather than instructed. The Writer is a **sibling, not a
+**sealed** behind the Surfacer: it sees thoughts, never machinery, which is what makes honesty
+structural rather than instructed. The Writer is a **sibling, not a
 subordinate**, hanging off that fan-out on the cold path. And the design has **one door into
 memory**: nothing reaches long-term storage around the shared read layer. (Built, that door is
 two — see [Retrieval](organs/retrieval.md).)
@@ -53,10 +53,9 @@ two — see [Retrieval](organs/retrieval.md).)
 |---|---|---|
 | [Perception](organs/perception.md) | a layer of modality modules; signal → raw symbols | hearing built; vision designed at the interface |
 | [Intake](organs/intake.md) | raw symbols → a faithful grounded percept | built and on |
-| [Subconscious](organs/subconscious.md) | continuous endogenous state; wakes Integration | decay tick only — the loop is the master dependency |
+| [Subconscious](organs/subconscious.md) | continuous endogenous state; salience to the Surfacer, steering into Integration | decay tick only — the loop is the master dependency |
 | [Integration](organs/integration.md) | the one conscious locus: thinks, forms intentions | the organ runs; the layer around it does not, so it is exposed |
 | [Surfacer](organs/surfacer.md) | machinery → first-person thought, *up* | rendering half only; reads `alto_mem` |
-| [Articulator](organs/articulator.md) | intent → bundle and steering, *down* | no code |
 | [Renderer](organs/renderer.md) | bundle → speech. Alto's voice | built and on |
 | [Action organ](organs/action.md) | intent → validated device calls | sketched; the channel into it ships |
 | [Processing](organs/processing.md) | reasons on demand, returns conclusions | only the web-search seam |
@@ -69,9 +68,9 @@ The last three are not boxes in the diagram, deliberately. **Identity** is not a
 it appears only as the self-node inside the graph, which is the claim. The **guard** and
 **Processing** are below the altitude of an orientation map; both have pages.
 
-The **Articulator** is left out too. Its page says designed, zero code, so the picture runs
-Integration straight into the Renderer. The design puts the Articulator between them, so that
-Integration never assembles the bundle and never learns that one exists.
+The **Articulator**, which the design placed between Integration and the Renderer, is out of these
+pages until it is re-examined. It never had code: today Integration and the Renderer are one
+fine-tuned model, and the picture runs Integration straight into the Renderer.
 
 ---
 
@@ -94,5 +93,5 @@ concluding something is undesigned, read its page.
 | What does a word mean here? | [GLOSSARY.md](GLOSSARY.md) |
 
 Pages cite code, specs, dated records and pull requests by path. Each citation that exists in
-the private repository, at commit `c01cf084`, links to it there. Those links open only if
+the private repository, at commit `8b244d54`, links to it there. Those links open only if
 you are signed in to GitHub with access to that repository; anyone else gets a 404.
