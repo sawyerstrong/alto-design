@@ -25,6 +25,16 @@ theme:
         icon: material/weather-sunny
         name: Switch to light mode
 
+plugins:
+  - search
+  # Click an image to open it full size, with zoom and drag. The organ map is 1884 px wide and
+  # the page column is about half that, so the labels are unreadable without it.
+  - glightbox:
+      zoomable: true
+      draggable: true
+      touchNavigation: true
+      auto_caption: false
+
 markdown_extensions:
   - tables
   - toc:

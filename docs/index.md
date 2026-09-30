@@ -42,4 +42,4 @@ stay right. The links open only if you are signed in to GitHub with access to th
 anyone else gets a 404. Contributor setup and working-practice pages are not published.
 
 *This site is generated from the project's source documents, snapshot of commit
-`e216eb0` (2026-09-29). Edits belong in the source, not in this repository.*
+`d7b4c79` (2026-09-29). Edits belong in the source, not in this repository.*
