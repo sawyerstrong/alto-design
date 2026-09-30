@@ -89,5 +89,6 @@ concluding something is undesigned, read its page.
 | Why is it built this way? | [PILLARS.md](PILLARS.md) |
 | What does a word mean here? | [GLOSSARY.md](GLOSSARY.md) |
 
-Pages cite specs, code, pull requests and dated records by path. Those live in a private
-repository and are not published, so the citations are plain text, not links.
+Pages cite code, specs, dated records and pull requests by path. Each citation that exists in
+the private repository, at commit `e6c6890e`, links to it there. Those links open only if
+you are signed in to GitHub with access to that repository; anyone else gets a 404.

@@ -21,9 +21,10 @@ so the current scaffolding never reads as the design.
 
 ## What is not here
 
-The code, the specs and the dated records these pages cite live in a private repository. Their
-citations appear as plain text (`path:line`, pull request numbers) and cannot be followed.
-Contributor setup and working-practice pages are not published.
+The code, the specs and the dated records these pages cite live in a private repository. Each
+citation that exists there links to it, pinned to commit `e6c6890e` so the line numbers
+stay right. The links open only if you are signed in to GitHub with access to that repository;
+anyone else gets a 404. Contributor setup and working-practice pages are not published.
 
 *This site is generated from the project's source documents, snapshot of commit
-`481a7d7` (2026-09-29). Edits belong in the source, not in this repository.*
+`b895f32` (2026-09-29). Edits belong in the source, not in this repository.*

@@ -1,6 +1,6 @@
 # The safety boundary — the guard
 
-> **Path:** hot · **Status:** complete and correct — but currently unreachable from the conversational model, which has no tools registered · **Code:** `ha.py` (device control), `web.py` (the outbound sibling)
+> **Path:** hot · **Status:** complete and correct — but currently unreachable from the conversational model, which has no tools registered · **Code:** [`ha.py`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py) (device control), [`web.py`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/web.py) (the outbound sibling)
 
 Everything else in this project is about giving a model more influence over what Alto thinks
 and says. This is the hard edge on that. **Influence over thought is the project; influence
@@ -16,18 +16,18 @@ a validated `(domain, service, entity_id, data)` tuple or a rejection. It sits b
 conversational model (today, Integration collapsed into a fine-tuned LoRA) and
 `HomeAssistantClient`, the only thing in the repo that talks to Home Assistant. It has a
 read-only sibling on the same boundary (`get_device_state`) and an *outbound* sibling in
-`web.py` guarding the other direction: what may leave, rather than what may act.
+[`web.py`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/web.py) guarding the other direction: what may leave, rather than what may act.
 
 ## The intended design
 
-Pillar 8 in CLAUDE.md: **the registry is the source of truth, trusted
+Pillar 8 in [CLAUDE.md](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/CLAUDE.md): **the registry is the source of truth, trusted
 over the model.** Every model-issued tool call is resolved against the config registry and
 checked against a per-domain service allowlist before anything is sent. A new device
 capability is added by extending the registry *and* the allowlist — never by bypassing the
 guard or trusting the model's `domain`/`service`/`entity_id`. Interiority never reaches the
 actuation path unchecked.
 
-The contract is SPEC-ha-tool-calling.md (approved
+The contract is [SPEC-ha-tool-calling.md](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/docs/specs/SPEC-ha-tool-calling.md) (approved
 2026-06-06), which replaced a substring phrase-map router with one tool-enabled LLM call plus
 this guard. One finding from its evidence base is worth carrying: *"play the tv"* is read as
 `turn_on` at every temperature, the guard rejects it, and the command safely fails. Capability
@@ -35,51 +35,51 @@ was never the limiter — input ambiguity and the guard are.
 
 Two designed extensions exist, and both are explicit that they do **not** touch the guard. The
 **two-stage action executor**
-(SPEC-two-stage-executor.md, over
-two-stage-action-executor.md) splits an action
+([SPEC-two-stage-executor.md](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/docs/specs/v1/SPEC-two-stage-executor.md), over
+[two-stage-action-executor.md](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/docs/systems/two-stage-action-executor.md)) splits an action
 turn into a full-context orchestrator (no tools, resolves referents, emits a directive) and a
 fresh-context executor (tools only), so reliability stops degrading as history grows — *"the
 executor proposes, the registry disposes."* The **tool/capability taxonomy**
-(tool-capability-model.md) maps every future tool
+([tool-capability-model.md](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/docs/systems/tool-capability-model.md)) maps every future tool
 onto the existing Three-Tier Action Model (autonomous / act-and-notify / confirm-first) rather
 than inventing a parallel consent system, reusing this guard as the pattern.
 
 ## What exists today
 
-All of it. `ha.py` is 302 lines and the whole boundary is in it.
+All of it. [`ha.py`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py) is 302 lines and the whole boundary is in it.
 
-**One generic tool, not one per capability.** `HA_TOOL` (`ha.py:17`) lets the model assemble
+**One generic tool, not one per capability.** `HA_TOOL` ([`ha.py:17`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L17)) lets the model assemble
 any `domain.service.entity_id`; the guard is what makes that safe. `GET_STATE_TOOL`
-(`ha.py:41`) is its read-only companion. `SERVICE_ALLOWLIST` (`ha.py:61`) is a per-domain set
+([`ha.py:41`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L41)) is its read-only companion. `SERVICE_ALLOWLIST` ([`ha.py:61`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L61)) is a per-domain set
 — `input_boolean`, `switch`, `light`, `media_player`, nothing else — and `normalize_service`
-(`ha.py:83`) applies a synonym map (the model emits "pause" and "play" without the `media_`
+([`ha.py:83`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L83)) applies a synonym map (the model emits "pause" and "play" without the `media_`
 prefix) before returning `None` for anything outside its domain's set.
 
-**`validate_tool_call`** (`ha.py:148`) is the guard proper, and its important line is
-`ha.py:154`:
+**`validate_tool_call`** ([`ha.py:148`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L148)) is the guard proper, and its important line is
+[`ha.py:154`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L154):
 
 ```python
 domain = registry.domain_of(canonical)   # trust the registry, not the model
 ```
 
 The model's `domain` argument is **discarded**, not checked. The entity resolves through
-`DeviceRegistry.resolve` (`ha.py:122`) — exact id, alias, friendly name or bare object id — or
+`DeviceRegistry.resolve` ([`ha.py:122`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L122)) — exact id, alias, friendly name or bare object id — or
 returns `None`, which ends the call. On `select_source` the guard narrows further: only apps
 known on *that* device resolve, and the data dict is rebuilt from the resolved value rather
-than passed through (`ha.py:160-165`). `validate_state_query` (`ha.py:169`) is the read-only
+than passed through ([`ha.py:160-165`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L160-L165)). `validate_state_query` ([`ha.py:169`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L169)) is the read-only
 sibling: same registry check, no service allowlist, because nothing is mutated. What comes
-back is narrowed too — `summarize_state` (`ha.py:191`) builds a compact string from a small
-attribute whitelist (`ha.py:178`), never the raw dict, since a `media_player`'s attributes
+back is narrowed too — `summarize_state` ([`ha.py:191`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L191)) builds a compact string from a small
+attribute whitelist ([`ha.py:178`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L178)), never the raw dict, since a `media_player`'s attributes
 carry a huge `source_list`.
 
-**There is exactly one `call_service` call site in the codebase.** `ha.py:295` defines it;
-`tool_dispatch.py:279` calls it, inside `ToolDispatcher.execute_tool_calls`, which validates at `:268`,
+**There is exactly one `call_service` call site in the codebase.** [`ha.py:295`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L295) defines it;
+[`tool_dispatch.py:279`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/tool_dispatch.py#L279) calls it, inside `ToolDispatcher.execute_tool_calls`, which validates at `:268`,
 destructures the *validated* tuple at `:274`, and only then reaches Home Assistant. On `None`
 it logs the rejected call and speaks "Sorry, I can't do that." The read path mirrors it at
-`tool_dispatch.py:115`.
+[`tool_dispatch.py:115`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/tool_dispatch.py#L115).
 
-**The outbound sibling.** `web.py` (147 lines) guards the other
-direction: `validate_search_query` (`web.py:63`) enforces the **"no corpus in the query" hard
+**The outbound sibling.** [`web.py`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/web.py) (147 lines) guards the other
+direction: `validate_search_query` ([`web.py:63`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/web.py#L63)) enforces the **"no corpus in the query" hard
 rule** — a query carrying any blocklisted personal term is rejected, as is an empty one or one
 over 300 characters, both sides NFKC-normalized and casefolded so casing and compatibility
 variants cannot slip a term past. Its scope note does not overclaim: this defends against the
@@ -87,27 +87,27 @@ local model *accidentally* echoing a known personal term and is **not** a defens
 deliberate homoglyph evasion, which NFKC does not fold. The blocklist lives in
 `ALTO_SEARCH_BLOCKLIST` (env or gitignored `.env`), not in the committed config, because the
 terms are themselves sensitive. `web_search.enabled` is `false`
-(`config.yaml:1097`); with it off the model never sees the tool.
+([`config.yaml:1097`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/config.yaml#L1097)); with it off the model never sees the tool.
 
 **Adding a device capability** means three edits and never fewer: the registry (`entities:` in
-`config.yaml`, line 1113), the allowlist (`ha.py:61`), and a new
-test in `test_alto_v0.py` (guard cases from line 172,
+[`config.yaml`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/config.yaml), line 1113), the allowlist ([`ha.py:61`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py#L61)), and a new
+test in [`test_alto_v0.py`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/tests/test_alto_v0.py) (guard cases from line 172,
 read-query cases from `:242`). Widening what the model is *allowed to emit* is not one of the
 three; neither is a second path to `call_service`. Separately, the HA long-lived token comes
 only from `ALTO_HA_TOKEN` or a gitignored `.env`, resolved in
-`config.py`, and is never logged or written to `config.yaml`.
+[`config.py`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/config.py), and is never logged or written to [`config.yaml`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/config.yaml).
 
 **And nothing currently calls any of it.** This is the most surprising fact about the organ
 and the one to check before debugging anything device-shaped: **the conversational model
 cannot reach Home Assistant at all today.** `self._conversational_tools` is `[]`
-(`pipeline.py:169`), the `ToolDispatcher.dispatch` call site was
-removed from both turn handlers (`pipeline.py:1538-1545`, `:1587-1594`), and `tool_sink` is
+([`pipeline.py:169`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/pipeline.py#L169)), the `ToolDispatcher.dispatch` call site was
+removed from both turn handlers ([`pipeline.py:1538-1545`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/pipeline.py#L1538-L1545), `:1587-1594`), and `tool_sink` is
 omitted from the streaming call entirely, so even a hallucinated tool call is dropped
 silently. Say "turn on the lights" today and Alto talks about it rather than doing it.
 
 **That empty list is an asserted invariant, not a leftover** — the *actuation firewall*
-(`pipeline.py:141-169`), backed by `test_the_actuation_firewall_is_an_invariant`
-(`test_alto_v0.py:4334`), which AST-scans `src/alto/` and
+([`pipeline.py:141-169`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/pipeline.py#L141-L169)), backed by `test_the_actuation_firewall_is_an_invariant`
+([`test_alto_v0.py:4334`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/tests/test_alto_v0.py#L4334)), which AST-scans [`src/alto/`](https://github.com/sawyerstrong/alto/tree/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto) and
 fails on any append, extend, insert or reassignment. Two reasons converge on the same value
 and **only the first expires.** One: Integration-MVP cut the effector channel, so device
 control, project queries and web search are all broken from the conversational path — the
@@ -129,11 +129,11 @@ lands, this code goes hot with no further review.
 What is unbuilt sits *around* it. The two-stage executor is a **draft** — authored in the
 2026-06-12 spec sweep, adversarially reviewed, **not owner-interviewed**, and a gated
 build-if-needed item whose gate is a measured silent-failure counter plus a latency arm
-(specs/README.md). Its evidence is three single deterministic
+([specs/README.md](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/docs/specs/README.md)). Its evidence is three single deterministic
 trajectories (1/6 → 4/6 → 5/6 correct tool calls); the spec itself calls the 4→5 improvement
 directional, pending a multi-turn harness re-run. Do not quote it as a result. The broader
 tool surface beyond Home Assistant and owner-invoked search is design direction in
-`tool-capability-model.md`, not code; autonomous research is V3 and will reuse this same guard
+[`tool-capability-model.md`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/docs/systems/tool-capability-model.md), not code; autonomous research is V3 and will reuse this same guard
 rather than growing its own.
 
 ## Pillars this serves
@@ -152,17 +152,17 @@ rather than growing its own.
 
 ## Sources
 
-- CLAUDE.md · [PILLARS.md](../PILLARS.md) ·
+- [CLAUDE.md](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/CLAUDE.md) · [PILLARS.md](../PILLARS.md) ·
   [THE-ORGANS.md](../THE-ORGANS.md) — pillar 8 and the guard in the turn diagram.
-- SPEC-ha-tool-calling.md — the approved contract.
-- SPEC-writer-build_14 §1.7 — the actuation
+- [SPEC-ha-tool-calling.md](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/docs/specs/SPEC-ha-tool-calling.md) — the approved contract.
+- [SPEC-writer-build_14](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/docs/specs/v3/SPEC-writer-build_14.html) §1.7 — the actuation
   firewall's second and non-expiring reason.
-- SPEC-two-stage-executor.md ·
-  two-stage-action-executor.md — draft.
-- tool-capability-model.md — the tool taxonomy and
+- [SPEC-two-stage-executor.md](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/docs/specs/v1/SPEC-two-stage-executor.md) ·
+  [two-stage-action-executor.md](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/docs/systems/two-stage-action-executor.md) — draft.
+- [tool-capability-model.md](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/docs/systems/tool-capability-model.md) — the tool taxonomy and
   the Three-Tier consent mapping.
-- Code: `ha.py` · `web.py` ·
-  `pipeline.py` ·
-  `config.py` ·
-  `config.yaml` ·
-  `test_alto_v0.py`.
+- Code: [`ha.py`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/ha.py) · [`web.py`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/web.py) ·
+  [`pipeline.py`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/pipeline.py) ·
+  [`config.py`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/alto/turn/config.py) ·
+  [`config.yaml`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/config.yaml) ·
+  [`test_alto_v0.py`](https://github.com/sawyerstrong/alto/blob/e6c6890efe85bfd33491b59e3113d89d1b787be4/src/tests/test_alto_v0.py).
