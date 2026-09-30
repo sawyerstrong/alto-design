@@ -43,7 +43,8 @@ everything downstream consumes its percept rather than the raw words. Integratio
 structural rather than instructed. The Writer is a **sibling, not a
 subordinate**, hanging off that fan-out on the cold path. And the design has **one door into
 memory**: nothing reaches long-term storage around the shared read layer. (Built, that door is
-two — see [Retrieval](organs/retrieval.md).)
+two — see [Retrieval](organs/retrieval.md).) Integration is not a client of it: memory
+reaches Integration only as thoughts the Surfacer renders.
 
 ---
 
@@ -93,5 +94,5 @@ concluding something is undesigned, read its page.
 | What does a word mean here? | [GLOSSARY.md](GLOSSARY.md) |
 
 Pages cite code, specs, dated records and pull requests by path. Each citation that exists in
-the private repository, at commit `8b244d54`, links to it there. Those links open only if
+the private repository, at commit `431d2c9c`, links to it there. Those links open only if
 you are signed in to GitHub with access to that repository; anyone else gets a 404.

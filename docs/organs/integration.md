@@ -1,6 +1,6 @@
 # Integration
 
-> **Path:** hot · **Status:** the organ runs; the *layer* around it does not, so Integration is exposed · **Code:** the `alto-integration-v6` model via [`llm.py`](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/turn/llm.py) (the `integration/` package is bundle filters, not the organ)
+> **Path:** hot · **Status:** the organ runs; the *layer* around it does not, so Integration is exposed · **Code:** the `alto-integration-v6` model via [`llm.py`](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/turn/llm.py) (the `integration/` package is bundle filters, not the organ)
 
 Integration is the **one conscious locus**. It experiences only thoughts and forms only
 intentions; everything that produces those thoughts and executes those intentions is
@@ -32,10 +32,10 @@ interface map with what actually crosses each line today.
 
 ## The intended design
 
-Two documents define it. [alto-integration-layer.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/systems/alto-integration-layer.md)
+Two documents define it. [alto-integration-layer.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/systems/alto-integration-layer.md)
 gives the job: decide whether to say anything at all, what cognitive investment is warranted,
 what form the response takes, what actions follow.
-[alto-conscious-locus.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/systems/alto-conscious-locus.md) then corrects the frame, and
+[alto-conscious-locus.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/systems/alto-conscious-locus.md) then corrects the frame, and
 the correction is the load-bearing part:
 
 > Integration does not query a database, because it does not know there is a database. It
@@ -58,28 +58,28 @@ that logging. One rule guards it: never route observations of the machinery back
 Integration as content it reasons over.
 
 Below the organ sits the curation contract from
-[alto-bundle-structure.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/systems/alto-bundle-structure.md), specified in
-[alto-integration-bundle-filters.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/systems/alto-integration-bundle-filters.md):
+[alto-bundle-structure.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/systems/alto-bundle-structure.md), specified in
+[alto-integration-bundle-filters.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/systems/alto-integration-bundle-filters.md):
 `retrieved_context` is fully curated for relevance, contradiction and staleness, and
 `actions_visible` for relevance, before anything reaches the Renderer.
 
 ## What exists today
 
-**Read [ARCHITECTURE.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/ARCHITECTURE.md):89 carefully**, because it is easy to take
+**Read [ARCHITECTURE.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/ARCHITECTURE.md):89 carefully**, because it is easy to take
 one way too far: *"the integration **layer** does not exist as code: the conversational model
 is called directly."* That is about the **keystone curation layer**, not the organ. The organ
 is running — it is what produces every reply. Conflating the two is the
-Integration-the-organ / [`alto/integration/`](https://github.com/sawyerstrong/alto/tree/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/integration)-the-package / the-integration-layer collision in
+Integration-the-organ / [`alto/integration/`](https://github.com/sawyerstrong/alto/tree/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/integration)-the-package / the-integration-layer collision in
 [GLOSSARY.md](../GLOSSARY.md), and it is an easy mistake to make.
 
 Integration and the Renderer are collapsed into one fine-tuned model — `alto-integration-v6`
-([`src/config.yaml`](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/config.yaml):88), called through
-[`llm.py`](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/turn/llm.py).
+([`src/config.yaml`](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/config.yaml):88), called through
+[`llm.py`](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/turn/llm.py).
 
-What the collapse actually ships, per [SPEC-integration-mvp.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/specs/v1/SPEC-integration-mvp.md):
+What the collapse actually ships, per [SPEC-integration-mvp.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/specs/v1/SPEC-integration-mvp.md):
 
 - **No system prompt.** The `ollama.system_prompt` persona knob is read and ignored; the
-  client is constructed with `""` ([`pipeline.py`](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/turn/pipeline.py):296-302)
+  client is constructed with `""` ([`pipeline.py`](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/turn/pipeline.py):296-302)
   and `_assemble_messages` emits no system message for an empty prompt (llm.py:106). Identity
   and behaviour reach the call through two channels only: the frozen LoRA, and injected thoughts.
 - **No tools.** `self._conversational_tools: list = []` (pipeline.py:169). `ToolDispatcher.dispatch`
@@ -88,11 +88,11 @@ What the collapse actually ships, per [SPEC-integration-mvp.md](https://github.c
   guard is untouched and still enforced; it simply has no live caller.
 - **A channel split.** The LoRA marks its own output: `¦…¦` is
   speech routed to TTS, `¤…¤` is action, everything outside a pair is thought and is discarded
-  ([`markers.py`](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/turn/markers.py)). Action spans are logged but deliberately
+  ([`markers.py`](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/turn/markers.py)). Action spans are logged but deliberately
   **not** written back into context memory — no effector fires, so recording them would train
   the next turn to trust a lie (pipeline.py:1022-1031). (I'm particularly proud of this, I found myself quite clever)
 - **Four ephemeral composers** wrap each call, in fixed order
-  ([`context.py`](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/turn/context.py), applied at pipeline.py:1553-1573 and
+  ([`context.py`](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/turn/context.py), applied at pipeline.py:1553-1573 and
   again at 1600-1620): `MEMORY_GUARD_DIRECTIVE` (context.py:477), `FACT_GUARD_DIRECTIVE` via
   the reader block (520), `AFFECT_SUPPRESSION_DIRECTIVE` (670) — all three **system-role** —
   and `with_surfaced_thoughts` (735), which appends this turn's pending thoughts as
@@ -101,7 +101,7 @@ What the collapse actually ships, per [SPEC-integration-mvp.md](https://github.c
   it arrived for; the same content is separately persisted for later turns.
 
 The `integration/` package is **not** the organ. Its docstring
-([`src/alto/integration/__init__.py`](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/integration/__init__.py)) says it
+([`src/alto/integration/__init__.py`](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/integration/__init__.py)) says it
 exports Filter 2 (contradiction) only — Filter 1 (relevance) needs Tier-2 embeddings, Filter 3
 (staleness) needs superseded-set instrumentation — and `filter_contradiction` has **no caller
 outside its own test file**: there is no bundle to curate, because nothing assembles one.
@@ -118,7 +118,7 @@ does not experience a Surfacer, a read layer, or a guard.
 | [Intake](intake.md) | in | the grounded percept — "to attend" | **not wired** — see below |
 | [Surfacer](surfacer.md) | in | first-person thoughts, as assistant-role history | live |
 | [Subconscious](subconscious.md) | in | steering, mood, and a trigger that *wakes* it | **neither edge is live** |
-| [Retrieval](retrieval.md) | in | a `[What Alto knows about X]` facts block | dark (`reader_enabled: false`) |
+| [Retrieval](retrieval.md) | none | Integration does not read the shared layer; memory reaches it as thoughts the Surfacer renders. A facts block into Integration is built, dark and ruled out | dark (`reader_enabled: false`) |
 | conversation buffer | in | the rolling recent-turn history (E2a) | live |
 | guards | in | per-turn directives | live — and the pillar-3 tension |
 | [Renderer](renderer.md) | out | speech, via `¦…¦` spans | live (collapsed into the same model) |
@@ -135,7 +135,7 @@ peers, one of them Integration, "to attend". In the runtime, the LLM call receiv
 STT text** and an assembled history — `self.ollama.chat(text, …)` — not the percept. So the
 faithful interpretation everything else consumes is the one thing the conscious locus does not
 get. It arrives only indirectly: the Surfacer consumes the percept and renders thoughts from
-it, and the knowledge block is derived from it while the reader is dark. Worth knowing before
+it. Worth knowing before
 you reason about what Integration "saw".
 
 **Both Subconscious edges are missing.** It should tilt cognition with steering, and it should
@@ -145,7 +145,7 @@ therefore only ever reached by a person pressing a key.
 
 **The Writer observes rather than receives.** Its interface is
 `observe_user_utterance(text, percept)` and `observe_turn_complete(reply, actions)`
-([`writer.py:336`, `:401`](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/write/writer.py#L401)) — the verb is deliberate. Integration
+([`writer.py:336`, `:401`](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/write/writer.py#L401)) — the verb is deliberate. Integration
 has no handle on it and cannot address memory. This is also where **mood-blindness** lives: the
 Writer reads affect from the graph but never takes Integration's live state as an input to what
 it records, so what gets remembered is not coloured by how the turn happened to feel.
@@ -166,7 +166,7 @@ unbuilt and the missing links are what make Integration *exposed*.
 
 **1. Integration commits.** It does not reach for a tool or a channel. It expresses intent in
 natural language, and its own weights classify that output into three channels — a **marking
-LoRA**, in [SPEC-integration-mvp.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/specs/v1/SPEC-integration-mvp.md)'s terms:
+LoRA**, in [SPEC-integration-mvp.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/specs/v1/SPEC-integration-mvp.md)'s terms:
 
 | Channel | Marked | Where it goes |
 |---|---|---|
@@ -234,7 +234,7 @@ Targeting all seven projections rather than attention alone is what lets the ada
 
 ### What it is trained to do
 
-The training corpus is the specification. [`lora_train.v6.jsonl`](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/research/lora_training/integration_v1/lora_train.v6.jsonl) is **1,349 examples**, each a
+The training corpus is the specification. [`lora_train.v6.jsonl`](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/research/lora_training/integration_v1/lora_train.v6.jsonl) is **1,349 examples**, each a
 user turn plus the assistant turn it should have produced, tagged with a category — and the
 categories are the behaviours being installed:
 
@@ -269,11 +269,11 @@ PARAMETER num_ctx 8192
 **No `SYSTEM` line, deliberately** — identity is in the weights, so the pipeline passes an empty
 system prompt and the persona config knob is read and ignored. The `.gguf` is a build artifact,
 converted from the PEFT adapter with llama.cpp's `convert_lora_to_gguf.py`; the recipe is in
-[the runbook](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/runbooks/integration-lora-train-eval-runbook.md).
+[the runbook](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/runbooks/integration-lora-train-eval-runbook.md).
 
 ### Versions, and which one you can actually get
 
-[`config.yaml`](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/config.yaml) names **`alto-integration-v6`**. Its Modelfile is committed; its weights are not —
+[`config.yaml`](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/config.yaml) names **`alto-integration-v6`**. Its Modelfile is committed; its weights are not —
 only `adapter-v1` ships in the repo. The v6 *training corpus* does ship, so v6 is reproducible
 by retraining but not by downloading.
 
@@ -302,26 +302,26 @@ directly against the machinery in both directions.
 Three things reach it today that the design says should not:
 
 - **Per-turn directives.** `MEMORY_GUARD_DIRECTIVE`, `FACT_GUARD_DIRECTIVE` and
-  `AFFECT_SUPPRESSION_DIRECTIVE` ([`context.py`](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/turn/context.py):477, :520,
+  `AFFECT_SUPPRESSION_DIRECTIVE` ([`context.py`](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/turn/context.py):477, :520,
   :670) are appended to the history to stop Integration claiming a memory or a feeling it does
   not have. They work. They are also **instructions the model obeys**, and pillar 3 says
   grounding must come from state the model reasons *from*, "never from an instruction it
   obeys". The guard is doing the honesty work the architecture is supposed to do structurally.
 - **A structured facts block.** `[What Alto knows about X]` is assembled and injected when
   armed — fields, not thoughts. (`reader_enabled` ships `false`, so it is usually absent, which
-  is the only reason this is not a bigger hole.)
+  is the only reason this is not a bigger hole; the design now rules the path out.)
 - **Assembled context generally.** Integration is handed a composed history rather than
   experiencing its own thoughts arriving, which is the same exposure seen from the
   other side.
 
-[`context.py:500`](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/turn/context.py#L500) already notices the sharp end of this: a guard can *itself* violate pillar 3
+[`context.py:500`](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/turn/context.py#L500) already notices the sharp end of this: a guard can *itself* violate pillar 3
 when every line it adds is individually true but the composition implies something false.
 
 The constraint binding today is therefore negative — no subsystem may inject conclusions as if
 they were earned — and the directives are the closest the runtime comes to the line.
 
 The direction of travel is specified, not vague.
-[SPEC-integration-stream-of-consciousness.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/specs/v1/SPEC-integration-stream-of-consciousness.md)
+[SPEC-integration-stream-of-consciousness.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/specs/v1/SPEC-integration-stream-of-consciousness.md)
 (DRAFT, direction-setting) says Integration must be **exclusively a first-person stream of
 consciousness** — no system prompt, no instructions, no structured data — with everything
 arriving as surfacer thoughts in the assistant channel that the model reasons *from* rather
@@ -342,7 +342,7 @@ spec, written 2026-07-22, describes feeding the *graph* reader's `FactRecord`s t
 still not done.
 
 The cost of getting this wrong is recorded, not hypothetical:
-[_FINDING-integration-honesty-live-2026-08-23.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/handoff/_FINDING-integration-honesty-live-2026-08-23.md)
+[_FINDING-integration-honesty-live-2026-08-23.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/handoff/_FINDING-integration-honesty-live-2026-08-23.md)
 traces the first live episode, where a fixture episode about a third party reached Integration
 as "I moved to Lisbon last April."
 
@@ -355,9 +355,9 @@ as "I moved to Lisbon last April."
 
 ## Sources
 
-- [docs/systems/alto-conscious-locus.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/systems/alto-conscious-locus.md) — the principle, and why it dissolves performance
-- [docs/systems/alto-integration-layer.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/systems/alto-integration-layer.md) · [alto-consciousness-integration.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/systems/alto-consciousness-integration.md)
-- [docs/systems/alto-bundle-structure.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/systems/alto-bundle-structure.md) · [alto-integration-bundle-filters.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/systems/alto-integration-bundle-filters.md)
-- [docs/specs/v1/SPEC-integration-stream-of-consciousness.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/specs/v1/SPEC-integration-stream-of-consciousness.md) · [SPEC-integration-mvp.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/specs/v1/SPEC-integration-mvp.md) · [specs/keystone/SPEC-integration-layer.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/specs/keystone/SPEC-integration-layer.md)
-- [docs/ARCHITECTURE.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/ARCHITECTURE.md) — the "does not exist as code" statement · [_FINDING-integration-honesty-live-2026-08-23.md](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/docs/handoff/_FINDING-integration-honesty-live-2026-08-23.md)
-- [src/alto/turn/pipeline.py](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/turn/pipeline.py) · [context.py](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/turn/context.py) · [llm.py](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/turn/llm.py) · [markers.py](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/turn/markers.py) · [integration/](https://github.com/sawyerstrong/alto/blob/8b244d54d07d5ee2836312f976a81f17ed40804a/src/alto/integration/__init__.py)
+- [docs/systems/alto-conscious-locus.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/systems/alto-conscious-locus.md) — the principle, and why it dissolves performance
+- [docs/systems/alto-integration-layer.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/systems/alto-integration-layer.md) · [alto-consciousness-integration.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/systems/alto-consciousness-integration.md)
+- [docs/systems/alto-bundle-structure.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/systems/alto-bundle-structure.md) · [alto-integration-bundle-filters.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/systems/alto-integration-bundle-filters.md)
+- [docs/specs/v1/SPEC-integration-stream-of-consciousness.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/specs/v1/SPEC-integration-stream-of-consciousness.md) · [SPEC-integration-mvp.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/specs/v1/SPEC-integration-mvp.md) · [specs/keystone/SPEC-integration-layer.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/specs/keystone/SPEC-integration-layer.md)
+- [docs/ARCHITECTURE.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/ARCHITECTURE.md) — the "does not exist as code" statement · [_FINDING-integration-honesty-live-2026-08-23.md](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/docs/handoff/_FINDING-integration-honesty-live-2026-08-23.md)
+- [src/alto/turn/pipeline.py](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/turn/pipeline.py) · [context.py](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/turn/context.py) · [llm.py](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/turn/llm.py) · [markers.py](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/turn/markers.py) · [integration/](https://github.com/sawyerstrong/alto/blob/431d2c9c80cd50c8fc053789acd1ad8de89ac767/src/alto/integration/__init__.py)
