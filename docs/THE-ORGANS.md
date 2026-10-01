@@ -63,11 +63,11 @@ reaches Integration only as thoughts the Surfacer renders.
 | [Writer](organs/writer.md) | persists experience to memory, mood-blind | recorder built; most of it switched off |
 | [Retrieval](organs/retrieval.md) | the shared read layer, activation, and what memory holds | two read paths: the graph reader is dark, `mem.read` is on |
 | [Identity](organs/identity.md) | the cold-start self, accreted through testimony | working |
-| [Safety boundary](organs/safety-boundary.md) | the guard between any model and your devices | complete — and currently uncalled |
 
-The last three are not boxes in the diagram, deliberately. **Identity** is not a component —
-it appears only as the self-node inside the graph, which is the claim. The **guard** and
-**Processing** are below the altitude of an orientation map; both have pages.
+Two of these are not boxes in the overview, deliberately. **Identity** is not a component —
+it appears only as the self-node inside the graph, which is the claim. **Processing** is below
+the altitude of an orientation map; it has a page. The guard on the device path has no page of
+its own: it is described in the [Action organ](organs/action.md).
 
 The **Articulator**, which the design placed between Integration and the Renderer, is out of these
 pages until it is re-examined. It never had code: today Integration and the Renderer are one
@@ -94,5 +94,5 @@ concluding something is undesigned, read its page.
 | What does a word mean here? | [GLOSSARY.md](GLOSSARY.md) |
 
 Pages cite code, specs, dated records and pull requests by path. Each citation that exists in
-the private repository, at commit `ec6be39e`, links to it there. Those links open only if
+the private repository, at commit `b93b8a9a`, links to it there. Those links open only if
 you are signed in to GitHub with access to that repository; anyone else gets a 404.
