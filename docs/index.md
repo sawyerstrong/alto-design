@@ -37,9 +37,9 @@ so the current scaffolding never reads as the design.
 ## What is not here
 
 The code, the specs and the dated records these pages cite live in a private repository. Each
-citation that exists there links to it, pinned to commit `b93b8a9a` so the line numbers
+citation that exists there links to it, pinned to commit `587b40d4` so the line numbers
 stay right. The links open only if you are signed in to GitHub with access to that repository;
 anyone else gets a 404. Contributor setup and working-practice pages are not published.
 
 *This site is generated from the project's source documents, snapshot of commit
-`b93b8a9` (2026-10-01). Edits belong in the source, not in this repository.*
+`587b40d` (2026-10-02). Edits belong in the source, not in this repository.*
