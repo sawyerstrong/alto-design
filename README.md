@@ -6,9 +6,9 @@ machine interiority. Published at <https://sawyerstrong.github.io/alto-design/>.
 This repository is a generated snapshot of the design pages: the nine pillars, the organ map, one
 page per organ, and the glossary. It holds no code. The project's source, specs and working notes
 are in a separate private repository. Citations to them in these pages link there, pinned to
-commit `b93b8a9a`, and open only for people signed in to GitHub with access to it.
+commit `587b40d4`, and open only for people signed in to GitHub with access to it.
 
-Snapshot of source commit `b93b8a9` (2026-10-01). Do not edit `docs/` here: the next
+Snapshot of source commit `587b40d` (2026-10-02). Do not edit `docs/` here: the next
 export overwrites it.
 
 ## Build locally

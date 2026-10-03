@@ -94,5 +94,5 @@ concluding something is undesigned, read its page.
 | What does a word mean here? | [GLOSSARY.md](GLOSSARY.md) |
 
 Pages cite code, specs, dated records and pull requests by path. Each citation that exists in
-the private repository, at commit `b93b8a9a`, links to it there. Those links open only if
+the private repository, at commit `587b40d4`, links to it there. Those links open only if
 you are signed in to GitHub with access to that repository; anyone else gets a 404.
