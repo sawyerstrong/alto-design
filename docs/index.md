@@ -2,7 +2,7 @@
 
 
 ## Foreword
-A bunch of these documents are going to be dripping with "Written by AI," and that's probably because much of it is! I can assure you, however, that I have reviewed it all myself and the content is mine, AI can just organize the jumble of ideas in my brain faster than I can, and I don't think it's worth my time to do it by hand. That being said I am going to try to inject snippets in my own voice throughout the docs as is necessary. Below is a quick overview of the project that doesn't sanitize or mince words. Because of that this system of documents and ultimately the code attached comes with a level of trust to its readers because frankly, I think I sound like a bit of a loon. There may be some documents with philosophical musings and I'm not so interested in dying on the hill of those ideas, nor do I even believe many of the things written, but the technical, verifiable systems are holding up. That means that either I'm slowly succumbing to psychosis, or this architecture is onto something pretty interesting. Or both.  
+A bunch of these documents are going to be dripping with "Written by AI," and that's probably because much of it is! I can assure you, however, that I have reviewed it all myself and the content is mine, AI can just organize the jumble of ideas in my brain faster than I can, and I don't think it's worth my time to do it by hand. That being said I am going to try to inject snippets in my own voice throughout the docs as is necessary. Below is a quick overview of the project that doesn't sanitize or mince words. Some ideas are lofty and a bit out there, but they're all grounded in at least some technical foundation.
 
 ## Introduction
 
