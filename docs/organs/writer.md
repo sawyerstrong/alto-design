@@ -1,6 +1,6 @@
 # The Writer — the cold path
 
-> **Path:** cold · **Status:** live recorder on; most sub-organs built and switched off; consolidator unbuilt · **Code:** [`writer.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer.py), `writer_*.py`, [`mem_bridge.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/read/mem_bridge.py), [`src/mem/`](https://github.com/sawyerstrong/alto/tree/587b40d4978e5a6d1997290d2dc1992188516e49/src/mem)
+> **Path:** cold · **Status:** live recorder on; most sub-organs built and switched off; consolidator unbuilt · **Code:** [`writer.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer.py), `writer_*.py`, [`mem_bridge.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/read/mem_bridge.py), [`src/mem/`](https://github.com/sawyerstrong/alto/tree/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/mem)
 
 The Writer turns the *now* into the past. It takes what was just said and persists it —
 episodes, the entities mentioned in them, the relations and events those mentions imply — so a
@@ -10,28 +10,30 @@ look independently broken are in fact starved by this one.
 
 ## Where it sits
 
-It consumes a completed turn: today the PTT-completed utterance (and the reply), and in the
-target shape intake's GroundedPercept. It emits episode Nodes and typed edges into the AGE
-graph behind [`src/alto/brain/store.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/brain/store.py), plus segments
+It consumes a completed turn: today the PTT-completed utterance as perception heard it (the
+raw text and its features) and the reply; in the target shape, a grounded percept from Intake,
+an organ deleted in code on 2026-10-04 ([intake.md](intake.md)). It emits episode Nodes and typed edges into the AGE
+graph behind [`src/alto/brain/store.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/brain/store.py), plus segments
 and derived lines into `mem`, its own separate store.
 
 It is a **cold-path sibling of the Subconscious** — not nested under it, not attached to
-intake ([architecture revisions §2](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/alto-architecture-revisions-june2026.md);
-[`writer.py:1-2`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer.py#L1-L2) says so too). Three tenses: intake extracts
-the incoming, the subconscious feels the now, the Writer turns the now into the past.
+the designed Intake ([architecture revisions §2](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/alto-architecture-revisions-june2026.md);
+[`writer.py:1-2`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer.py#L1-L2) says so too). Three tenses in the design:
+intake extracts the incoming, the subconscious feels the now, the Writer turns the now into the
+past. (In code there is no intake, and the Writer reads what perception heard.)
 
 The firewall is **current-mood-blindness, not affect-neutrality** (revisions §3). The Writer
 *must* read graph-affect — prior valences, standing affect — because computing an episode's
 valence is its job. What it must never do is subscribe to the live subconscious mood as an
 input to what it records: Alto irritated *now* does not get to bend the facts. The
 subconscious legitimately gates *whether and how much* is worth writing; the Writer alone
-controls *what*. [`writer.py:13`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer.py#L13) marks the module "cold-path, mood-blind". Downstream,
+controls *what*. [`writer.py:13`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer.py#L13) marks the module "cold-path, mood-blind". Downstream,
 everything it writes is read by the shared graph-read layer, the reader and the surfacer —
 see [retrieval.md](retrieval.md).
 
 ## The intended design
 
-**Two timescales** ([revisions §4](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/alto-architecture-revisions-june2026.md)), because
+**Two timescales** ([revisions §4](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/alto-architecture-revisions-june2026.md)), because
 memory has two:
 
 - **Live recorder** — concurrent with experience but off the hot path. Records that an
@@ -41,21 +43,21 @@ memory has two:
   promotes and demotes beliefs, detects patterns, prunes, restructures. Deliberately not live:
   expensive, and it needs an accumulated backlog — sleep pressure is roughly that backlog's
   size. Draft contract:
-  [SPEC-consolidation-loop.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v3/SPEC-consolidation-loop.md).
+  [SPEC-consolidation-loop.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v3/SPEC-consolidation-loop.md).
 
 This split is the Writer-side expression of the standing rule that **the hot loop never writes
 durable structure** — only the cold consolidator changes who Alto is becoming.
 
 **The write organ itself is mid-replacement, and that is the most important thing to know
 before reading the module list.**
-[PLAN-writer-v2.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v3/PLAN-writer-v2.md) decides the target: v2 **replaces the
+[PLAN-writer-v2.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v3/PLAN-writer-v2.md) decides the target: v2 **replaces the
 resolver's identity adjudication** with a deterministic canonical → alias → create-new
 cascade (the LLM stops adjudicating sameness), makes merges *soft* so every later mistake is
 recoverable, and **collapses the three extractors into one organ**. Separately, the config
 records a 2026-08-15 decision to retire the per-turn LLM cold path altogether in favour of an
-**episode-close picture pass** ([`config.yaml:580-581`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/config.yaml#L580-L581)), shaped by
-[SPEC-episode-account.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v3/SPEC-episode-account.md) after
-[DECISION-picture-shape-and-felt-state.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v3/DECISION-picture-shape-and-felt-state.md)
+**episode-close picture pass** ([`config.yaml`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/config.yaml), `writer:` block), shaped by
+[SPEC-episode-account.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v3/SPEC-episode-account.md) after
+[DECISION-picture-shape-and-felt-state.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v3/DECISION-picture-shape-and-felt-state.md)
 found the claim/triple form wrong — an exclusion became an entity, a claim got built on the
 wrong nucleus, a comparative stance had no slot at all.
 
@@ -64,23 +66,23 @@ read it as the architecture.
 
 ## What exists today
 
-**The live recorder is on and real.** [`writer.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer.py) (1,207
-lines) observes each completed utterance, decides by idle gap whether to extend the current
+**The live recorder is on and real.** [`writer.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer.py)
+observes each completed utterance, decides by idle gap whether to extend the current
 episode or open a new one, writes it as a `kind:'episode'` Node with its turns inline, and
-chains episodes with `before {label:'episode_succession'}` edges ([`writer.py:27-28`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer.py#L27-L28)). If a
+chains episodes with `before {label:'episode_succession'}` edges ([`writer.py:26-27`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer.py#L26-L27)). If a
 store call raises, the event spools to JSONL and the turn still succeeds — the pipeline never
-fails because the brain DB is down ([`writer.py:20`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer.py#L20)).
+fails because the brain DB is down ([`writer.py:19`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer.py#L19)).
 
 **`mem` is the writer's own store: written on every turn, and read by the Surfacer since
-2026-09-22.** [`src/mem/__init__.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/mem/__init__.py) maps its modules against
-[SPEC-writer-build_14](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v3/SPEC-writer-build_14.html); the seam is
-[`mem_bridge.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/read/mem_bridge.py), the only module that imports `mem`.
-`mem.enabled: true` ([`config.yaml:414`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/config.yaml#L414)) — one INSERT per utterance and per reply, no model, no
-GPU. But `enrich: false` (429) for a measured reason: step ⑤'s 14B needs 9.57 GiB beside a
+2026-09-22.** [`src/mem/__init__.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/mem/__init__.py) maps its modules against
+[SPEC-writer-build_14](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v3/SPEC-writer-build_14.html); the seam is
+[`mem_bridge.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/read/mem_bridge.py), the only module that imports `mem`.
+`mem.enabled: true` ([`config.yaml:313`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/config.yaml#L313)) — one INSERT per utterance and per reply, no model, no
+GPU. But `enrich: false` ([`config.yaml:328`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/config.yaml#L328)) for a measured reason: step ⑤'s 14B needs 9.57 GiB beside a
 9.69 GiB conversational model on a card with ~14.5 GiB free, so loading it evicts all three
 production models and costs 8.8s on the next turn against ~1s of work. `close_episodes: true`
-(456), `corefer_model: false` (466). What a turn pays is unchanged, but the write side no longer
-ends at the database: `mem.read.enabled: true` ([`config.yaml:487`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/config.yaml#L487)) puts a read path on top of
+([`config.yaml:356`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/config.yaml#L356)), `corefer_model: false` ([`config.yaml:366`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/config.yaml#L366)). What a turn pays is unchanged, but the write side no longer
+ends at the database: `mem.read.enabled: true` ([`config.yaml:387`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/config.yaml#L387)) puts a read path on top of
 it, and what `mem` holds can reach a reply through the Surfacer — see
 [retrieval.md](retrieval.md). Because `enrich` is off, the lines that path reads are derived only
 when someone runs the enrichment batch. And when a rebuild replaces a derived row, the old one is
@@ -90,44 +92,42 @@ archived to `<table>_history` in the same transaction (since 2026-09-14) rather 
 
 | Sub-organ | Module | Shipped flag |
 |---|---|---|
-| Resolver (binds mentions to entities) | [`writer_resolver.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_resolver.py) (2,377) | `resolver_enabled: false` ([`config.yaml:587`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/config.yaml#L587)) |
-| Relator (the entity-relation / taxonomy layer) | [`writer_relator.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_relator.py) (2,111) | `relator_enabled: true` (626), `relator_llm_enabled: false` (632) |
-| Relation extractor | [`writer_relation_extractor.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_relation_extractor.py) (615) | `relation_extractor_enabled: false` (751) |
-| Event extractor (life events) | [`writer_event_extractor.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_event_extractor.py) (1,083) | `event_extractor_enabled: false` (796) |
-| Typer (entity types, co-occurrence) | [`writer_typer.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_typer.py) (719) | `typer_enabled: false` (840) |
-| Episode read / account | [`writer_episode_read.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_episode_read.py) (882), [`writer_episode_account.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_episode_account.py) (869) | both keys commented out ⇒ false ([`config.yaml:862`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/config.yaml#L862), `908`) |
+| Resolver (eager self-schema learners only) | [`writer_resolver.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer_resolver.py) | no flag; always on |
+| Relator (the entity-relation / taxonomy layer) | [`writer_relator.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer_relator.py) | `relator_enabled: true` ([`config.yaml:524`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/config.yaml#L524)); deterministic detectors only |
+| Episode read / account | [`writer_episode_read.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer_episode_read.py), [`writer_episode_account.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer_episode_account.py) | both keys commented out ⇒ false ([`config.yaml:541`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/config.yaml#L541), `:586`) |
 
-The resolver flag is the load-bearing one, and it is narrower than its name.
-`resolver_enabled: false` disables **only** the LLM resolution path: the eager, deterministic
-self-schema and `addressed` writes still run — they are the cold-start identity accretion
-pillar 4 rests on — and then `resolve()` returns before the entity mention-edge path
-([`writer_resolver.py:1109`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_resolver.py#L1109), reasoning at `:967-973`).
-Since `add_mention_edge` has exactly one caller in the package and it sits on the suppressed
-side of that branch, **no new mention edges are written on the live path at all.** And
+The resolver's LLM half (entity create/link and mention edges), the relation extractor, the
+event extractor and the typer were switched off on 2026-08-15 and deleted on 2026-10-04: the
+resolver's half had lost its only input when intake was deleted, and the other three needed the
+entity nodes only it minted. What is left of the resolver is the eager, deterministic self-schema
+and `addressed` writes — the cold-start identity accretion pillar 4 rests on
+([`writer_resolver.py:83`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer_resolver.py#L83)). Since `add_mention_edge`
+now has no caller, **no new mention edges are written on the live path at all.** And
 `relator_enabled: true` is on but detector-only by design: the producer stamp measured five
 relation edges across 150 episodes, all five from the LLM arm that is off, so the production
 path "may be writing almost no relations at all" (PLAN-writer-v2 §3).
 
-**The consolidator has no code.** The one consolidation-shaped thing that exists is
-`ProjectStore.consolidate_concepts` ([`store.py:1467`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/brain/store.py#L1467)), an
-offline, dry-run-by-default pass that merges duplicate concept nodes — and [`writer.py:693`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer.py#L693)
-deliberately refuses to run it on the live cold path. Aggregate standing affect, belief
+**The consolidator has no code.** The one consolidation-shaped thing that existed,
+`ProjectStore.consolidate_concepts` (an offline, dry-run-by-default merge of duplicate concept
+nodes), had no caller and was deleted 2026-10-05. Aggregate standing affect, belief
 promotion, pattern detection and pruning are designed and unbuilt. Throughout,
-[`gate.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/gate.py) is what keeps the cold path off the hot GPU: the
-resolver's LLM call blocks until the user has been idle for a configured window.
+[`gate.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/gate.py) is the turn-activity gate between-turn work waits on;
+its live caller is now the idle tick, not the write side (the resolver's LLM call it was built for
+was deleted 2026-10-04).
 
 ## The gap
 
-The gap is not "the organs do not work." It is that **the organs work, are switched off, and
-the thing that replaces them is designed but not built.** The current implementation is slated
-for replacement; the plan doc is [PLAN-writer-v2.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v3/PLAN-writer-v2.md).
+The gap is not "the organs do not work." It is that **the organs were switched off, then deleted
+(2026-10-04), and the thing that replaces them is designed but not built.** The current implementation is slated
+for replacement; the plan doc is [PLAN-writer-v2.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v3/PLAN-writer-v2.md).
 
 Closing it is gated on that build order: phase 0 extracts the guard chain the three extractors
-each copy, phase 1 lands the deterministic identity cascade, phase 2 turns `merge_entities`'
-`DETACH DELETE` into a soft deactivation — which is what makes every later mistake recoverable
-and is therefore pillar 9's real unblock — and phase 3 collapses the extractors. The
-resolver's 15 named type gates and 203 tests are v2's acceptance suite, turning "rebuild" into
-"port" (§2), and the five identity mechanisms — PRs [#197](https://github.com/sawyerstrong/alto/pull/197)–[#201](https://github.com/sawyerstrong/alto/pull/201), closed 2026-09-29 with their tips
+each copy, phase 1 lands the deterministic identity cascade, phase 2 builds a merge whose loser is
+soft-deactivated rather than `DETACH DELETE`d (the old `merge_entities` did the latter; it had no
+caller and was deleted 2026-10-05) — which is what makes every later mistake recoverable
+and is therefore pillar 9's real unblock — and phase 3 collapses the extractors. The 15 named
+type gates (moved to `name_gates`, `phrase_gates` and `value_gates`) and their tests are v2's
+acceptance suite, turning "rebuild" into "port" (§2), and the five identity mechanisms — PRs [#197](https://github.com/sawyerstrong/alto/pull/197)–[#201](https://github.com/sawyerstrong/alto/pull/201), closed 2026-09-29 with their tips
 tagged `archive/resolver-identity-stack/*` — are the only rollback. §6b records why they were
 closed before v2 beat v1's edge precision on an unseen slice, which was the original condition.
 One metric is
@@ -141,37 +141,37 @@ already retired: pair-closure scored 10 and 13 on the *same commit, same config,
   resolver is currently exactly that gate. Measured trigger: 730 simulated episodes → 953
   mentions, 0 relations; a blind gold standard → 0 of ~30 durable facts.
 - **Pillar 3 (honesty by construction)** — the line pillar 9 does not cross, worked out at
-  [`writer_relator.py:172`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_relator.py#L172): a span with both a clause
+  [`writer_relator.py:154`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer_relator.py#L154): a span with both a clause
   boundary and a negator has a sign no regex can decide, so the proposal is **dropped** rather
   than guessed. An inverted sign "says the opposite of the utterance, so there is nothing to
   revise later" — a confident falsehood that looks exactly like a fact.
 - **Pillar 2 (affect as lived state)** — the Writer computes an episode's evidential affect
   from the graph and the evidence, never from the present mood.
 - **Pillar 1 (continuous being)** — episode succession is the record of continuity;
-  [`writer_episode_read.py:32`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_episode_read.py#L32) marks the turn-shaped compromise rather than hiding it.
+  [`writer_episode_read.py:32`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer_episode_read.py#L32) marks the turn-shaped compromise rather than hiding it.
 - **Pillar 7 (composed proof)** — every flag above was flipped, or held, on a measured gate;
-  [`writer_relator.py:419`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_relator.py#L419) refuses to fit a schema to its own test set.
+  [`config.yaml:521`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/config.yaml#L521) states which configuration the relator's 0-fabrication number describes.
 
 ## Sources
 
-- [CLAUDE.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/CLAUDE.md) · [docs/README.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/README.md) ·
+- [CLAUDE.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/CLAUDE.md) · [docs/README.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/README.md) ·
   [PILLARS.md](../PILLARS.md) · [THE-ORGANS.md](../THE-ORGANS.md) ·
-  [CHECKS-measurement.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/CHECKS-measurement.md).
-- [alto-architecture-revisions-june2026.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/alto-architecture-revisions-june2026.md) —
+  [CHECKS-measurement.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/CHECKS-measurement.md).
+- [alto-architecture-revisions-june2026.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/alto-architecture-revisions-june2026.md) —
   §2 placement, §3 the mood firewall, §4 the two timescales, §6 concurrency.
-- [PLAN-writer-v2.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v3/PLAN-writer-v2.md) — the target and the build order.
-- Specs (all drafts, not interview-gated — see [specs/README.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/README.md)):
-  [SPEC-writer-recorder.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v1/SPEC-writer-recorder.md) ·
-  [SPEC-relation-organ.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v1/SPEC-relation-organ.md) ·
-  [SPEC-autobiographical-events.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v1/SPEC-autobiographical-events.md) ·
-  [SPEC-episode-account.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v3/SPEC-episode-account.md) (supersedes
-  [SPEC-episode-residue.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v3/SPEC-episode-residue.md)) ·
-  [DECISION-picture-shape-and-felt-state.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v3/DECISION-picture-shape-and-felt-state.md) ·
-  [SPEC-consolidation-loop.md](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/docs/specs/v3/SPEC-consolidation-loop.md).
-- Code: [`writer.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer.py) ·
-  [`writer_resolver.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_resolver.py) ·
-  [`writer_relator.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/writer_relator.py) ·
-  [`gate.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/write/gate.py) ·
-  [`mem_bridge.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/alto/read/mem_bridge.py) ·
-  [`src/mem/__init__.py`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/mem/__init__.py) ·
-  [`config.yaml`](https://github.com/sawyerstrong/alto/blob/587b40d4978e5a6d1997290d2dc1992188516e49/src/config.yaml).
+- [PLAN-writer-v2.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v3/PLAN-writer-v2.md) — the target and the build order.
+- Specs (all drafts, not interview-gated — see [specs/README.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/README.md)):
+  [SPEC-writer-recorder.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v1/SPEC-writer-recorder.md) ·
+  [SPEC-relation-organ.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v1/SPEC-relation-organ.md) ·
+  [SPEC-autobiographical-events.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v1/SPEC-autobiographical-events.md) ·
+  [SPEC-episode-account.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v3/SPEC-episode-account.md) (supersedes
+  [SPEC-episode-residue.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v3/SPEC-episode-residue.md)) ·
+  [DECISION-picture-shape-and-felt-state.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v3/DECISION-picture-shape-and-felt-state.md) ·
+  [SPEC-consolidation-loop.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/specs/v3/SPEC-consolidation-loop.md).
+- Code: [`writer.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer.py) ·
+  [`writer_resolver.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer_resolver.py) ·
+  [`writer_relator.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer_relator.py) ·
+  [`gate.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/gate.py) ·
+  [`mem_bridge.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/read/mem_bridge.py) ·
+  [`src/mem/__init__.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/mem/__init__.py) ·
+  [`config.yaml`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/config.yaml).
