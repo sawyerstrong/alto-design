@@ -38,7 +38,9 @@ is specified in depth. That is a different category from "not worked out yet", a
 pages keep them apart.
 
 **Four things the picture is saying.** Intake **fans out in parallel** to three peers, and
-everything downstream consumes its percept rather than the raw words. Integration is
+everything downstream consumes its percept rather than the raw words. (That is the design; in
+code Intake was deleted on 2026-10-04 and every organ reads the raw words — see
+[Intake](organs/intake.md).) Integration is
 **sealed** behind the Surfacer: it sees thoughts, never machinery, which is what makes honesty
 structural rather than instructed. The Writer is a **sibling, not a
 subordinate**, hanging off that fan-out on the cold path. And the design has **one door into
@@ -53,7 +55,7 @@ reaches Integration only as thoughts the Surfacer renders.
 | Organ | What it does | Today |
 |---|---|---|
 | [Perception](organs/perception.md) | a layer of modality modules; signal → raw symbols | hearing built; vision designed at the interface |
-| [Intake](organs/intake.md) | raw symbols → a faithful grounded percept | built and on |
+| [Intake](organs/intake.md) | raw symbols → a faithful grounded percept | removed 2026-10-04; perception's model-free `hear` stands in |
 | [Subconscious](organs/subconscious.md) | continuous endogenous state; salience to the Surfacer, steering into Integration | decay tick only — the loop is the master dependency |
 | [Integration](organs/integration.md) | the one conscious locus: thinks, forms intentions | the organ runs; the layer around it does not, so it is exposed |
 | [Surfacer](organs/surfacer.md) | machinery → first-person thought, *up* | rendering half only; reads `alto_mem` |
@@ -94,5 +96,5 @@ concluding something is undesigned, read its page.
 | What does a word mean here? | [GLOSSARY.md](GLOSSARY.md) |
 
 Pages cite code, specs, dated records and pull requests by path. Each citation that exists in
-the private repository, at commit `587b40d4`, links to it there. Those links open only if
+the private repository, at commit `6b1b8a38`, links to it there. Those links open only if
 you are signed in to GitHub with access to that repository; anyone else gets a 404.
