@@ -5,7 +5,7 @@ about to break one.*
 
 > **This page is derived.** The nine numbered statements are the contract; this page is
 > the reasoning behind them, written for a person rather than for an agent mid-task. The
-> contract lives in the project's [`CLAUDE.md`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/CLAUDE.md), which is not published here.
+> contract lives in the project's [`CLAUDE.md`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/CLAUDE.md), which is not published here.
 
 ---
 
@@ -58,7 +58,7 @@ were a decision.
 only by turn. A state machine with no state between turns. An interface that cannot express
 "nothing happened, and that itself was experienced."
 
-**In code.** [`writer_episode_read.py:32`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer_episode_read.py#L32) names this explicitly while consuming a turn-shaped
+**In code.** [`writer_episode_read.py:32`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/alto/write/writer_episode_read.py#L32) names this explicitly while consuming a turn-shaped
 input — the comment exists to mark the compromise rather than hide it.
 
 **Today.** Largely aspirational. Between turns there are two small ticks — a state-decay tick and
@@ -122,18 +122,18 @@ check and a line in the prompt, and two invented strings reached permanent stora
 a garbled "surfacer", and `behaved emotion`, a recombination of "true behaved affect or
 emotion". The difference is not care or prompt quality — it is whether the guard asks *"is this
 shaped like a referent"* or *"did anyone actually say it."* The gate now asks the second, and a
-test asserts both strings are refused ([`src/mem/topics.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/mem/topics.py), `_unattested_reason`).
+test asserts both strings are refused ([`src/mem/topics.py`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/mem/topics.py), `_unattested_reason`).
 
 **How you'd break it.** Adding "do not invent anything" to a prompt and calling it a guard.
 Letting a model return free text where it could return an index. Rendering a feeling the
 system does not hold. Any grounding that depends on the model's cooperation.
 
-**In code.** [`surfacer.py:613`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/read/surfacer.py#L613) — when verification fails, **drop the intrusion**; a dropped
-thought is honest. [`surfacer_verify.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/read/surfacer_verify.py) is the deterministic backstop for this pillar, and
+**In code.** [`surfacer.py:605`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/alto/read/surfacer.py#L605) — when verification fails, **drop the intrusion**; a dropped
+thought is honest. [`surfacer_verify.py`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/alto/read/surfacer_verify.py) is the deterministic backstop for this pillar, and
 dropping is its failure mode throughout. It runs on the Surfacer's thoughts, not on the spoken
 reply, and it is a lexical trace, so words the speaker did say, rearranged, pass it. In the one
 graded end-to-end run (2026-09-25), 6 of 40 replies were fabricated, and at least 2 of the 6 were a
-distorted thought repeated as fact. The fact-guard directive in [`context.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/runtime/context.py) (removed with the reader's knowledge block, [#232](https://github.com/sawyerstrong/alto/pull/232))
+distorted thought repeated as fact. The fact-guard directive in [`context.py`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/alto/runtime/context.py) (removed with the reader's knowledge block, [#232](https://github.com/sawyerstrong/alto/pull/232))
 documented a subtle case: a guard can itself violate pillar 3 when every individual line is true
 but the composition implies something false.
 
@@ -152,9 +152,9 @@ it makes the identity revisable, inspectable and *earned*.
 name at migration time. Training self-description into the adapter. Treating the operator as
 privileged-by-construction rather than as a speaker who became known.
 
-**In code.** [`surfacer.py:1753`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/read/surfacer.py#L1753) — the speaker's **earned** name, or `None` while they are still
-a nameless referent. [`surfacer.py:376`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/read/surfacer.py#L376) — unset is "the honest cold-start state," not a bug to
-paper over. [`surfacer_verify.py:157`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/read/surfacer_verify.py#L157) — `None`/blank/non-string all mean *still a nameless
+**In code.** [`surfacer.py:1751`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/alto/read/surfacer.py#L1751) — the speaker's **earned** name, or `None` while they are still
+a nameless referent. [`surfacer.py:365`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/alto/read/surfacer.py#L365) — unset is "the honest cold-start state," not a bug to
+paper over. [`surfacer_verify.py:157`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/alto/read/surfacer_verify.py#L157) — `None`/blank/non-string all mean *still a nameless
 referent*, and that is what routes the render.
 
 **Today.** Working. Name bindings have been measured accreting from testimony over a run
@@ -211,12 +211,12 @@ four of them at once.
 match your detector's markers — teaching to the test. Quoting a number without its measurement
 conditions (cold vs after-retry, sample size, warm vs first-run).
 
-**In code.** [`src/config.yaml:521`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/config.yaml#L521) — the relator's flag comment says which configuration its
-0-fabrication number describes (the detectors alone), so the number is not quoted for a path it
-was never measured on.
+**In code.** [`src/config.yaml:416`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/config.yaml#L416) — `mem.read.top_n` carries the sweep behind its value with
+its conditions (which store, which fixture, six points, latency measured alongside), so the
+number is not quoted for a configuration it was never measured on.
 
 **Before you quote any number**, run the five questions in
-[CHECKS-measurement.md](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/docs/CHECKS-measurement.md). Every entry in that document is a real
+[CHECKS-measurement.md](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/docs/CHECKS-measurement.md). Every entry in that document is a real
 instance from this repo. The dominant failure mode here is not a broken organ; it is a
 confident number describing a configuration Alto does not run.
 
@@ -234,7 +234,7 @@ feels.
 capability by widening what the model may emit instead of extending the registry. Any second
 path to `call_service`.
 
-**In code.** [`ha.py`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/action/ha.py) — `validate_tool_call` resolves the entity against the registry and
+**In code.** [`ha.py`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/alto/action/ha.py) — `validate_tool_call` resolves the entity against the registry and
 checks the service against a per-domain allowlist. There is exactly **one** `call_service`
 call site, immediately behind that check, and it consumes the *validated* tuple rather than
 the model's arguments. A new capability means extending the registry **and** the allowlist
@@ -242,7 +242,7 @@ the model's arguments. A new capability means extending the registry **and** the
 
 This is the one pillar whose design is finished rather than aspirational — but note the
 current runtime goes further than the pillar asks. Integration-MVP registers **no tools** on
-the conversational model (the invariant at [`alto.py:334-338`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/runtime/alto.py#L334-L338)) and removed the dispatch call site, so the guard
+the conversational model (the invariant at [`alto.py:317-321`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/alto/runtime/alto.py#L317-L321)) and removed the dispatch call site, so the guard
 sits in code nothing currently calls and even a hallucinated tool call is dropped. Device
 control awaits a future action-LLM organ. See
 [organs/action.md](organs/action.md).
@@ -268,7 +268,7 @@ said**. It never licenses inventing what was not — that is pillar 3, and a dif
 Apply it to the **write** side; never use it to relax the surfacer's fabrication guards,
 because a false memory Alto *narrates* is far harder to correct than a wrong edge in a graph.
 
-**In code.** [`alto/brain/store.py:1777`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/brain/store.py#L1777) — a low-confidence capture is allowed, "but it must be
+**In code.** [`alto/brain/store.py:1777`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/alto/brain/store.py#L1777) — a low-confidence capture is allowed, "but it must be
 MARKED so a reader can discount it." Marking is what makes it repairable.
 
 ---
@@ -292,9 +292,10 @@ still correct. File it; fix it later.
 **Forbidden by 3.** Pulling words out of a *different* piece of testimony into that account.
 That is a false memory with a false source — not an imprecise record of something real.
 
-**The clearest case of all**, at [`writer_relator.py:154`](https://github.com/sawyerstrong/alto/blob/6b1b8a38fa185eab66e96ac1d48fb8d19b332bb9/src/alto/write/writer_relator.py#L154): when a span has both a clause
-boundary and a negator, the sign of the relation cannot be determined by regex, so the
-proposal is **dropped** rather than written with a guessed sign. The reasoning is worth
+**The clearest case of all**, in `_assertion_polarity` (now [`src/mem/polarity.py`](https://github.com/sawyerstrong/alto/blob/1e4e6b366f069d844cfd0c2d6a0b5668dd4de3ff/src/mem/polarity.py); written for
+the relator, deleted 2026-10-05): when a span has both a clause boundary and a negator, the sign
+of the relation cannot be determined by regex, so the relator **dropped** the proposal rather
+than writing it with a guessed sign. The reasoning is worth
 reading in full, because it shows the test being applied rather than asserted:
 
 > *Dropping here does NOT contradict pillar 9. That pillar licenses imperfect capture of what
