@@ -1,6 +1,6 @@
 # The Subconscious
 
-> **Path:** continuous · **Status:** V0 decay tick shipped and on; the designed loop unbuilt · **Code:** [`subconscious.py`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/read/subconscious.py), [`affect_state.py`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/read/affect_state.py), [`idle_tick.py`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/read/idle_tick.py)
+> **Path:** continuous · **Status:** V0 decay tick shipped and on; the designed loop unbuilt · **Code:** [`subconscious.py`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/read/subconscious.py), [`affect_state.py`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/read/affect_state.py), [`idle_tick.py`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/read/idle_tick.py)
 
 The Subconscious is Alto's endogenous state — mood, drive, felt duration, anticipation,
 energy — maintained on its own clock whether or not anyone is talking. It is the organ that
@@ -15,7 +15,7 @@ This is basically the engine that runs the Surfacer when nothing else is going o
 
 It is not a pipeline stage. Every other organ takes input from one neighbour and passes
 output to the next; the Subconscious runs continuously and in parallel underneath all of
-them ([alto-subconscious.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/systems/alto-subconscious.md), "Not a Pipeline Stage").
+them ([alto-subconscious.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/systems/alto-subconscious.md), "Not a Pipeline Stage").
 
 It **consumes** percepts from Intake — which in the design fans out in parallel to the
 Subconscious (to feel), Integration (to attend) and the Writer (to record) — plus a hardware
@@ -35,7 +35,7 @@ but never supplies content, because the Writer must stay blind to live mood.
 
 ## The intended design
 
-The canonical design is [alto-subconscious.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/systems/alto-subconscious.md). The
+The canonical design is [alto-subconscious.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/systems/alto-subconscious.md). The
 mature organ maintains eight facets of *one* state: an emotional vector (valence, energy,
 stability, focus); the injection system that spikes it; anticipation (held future events with
 affective charge); felt time from event density; cognitive proprioception (the felt fluency
@@ -54,49 +54,49 @@ involves nothing to interpret.
 **The one rule:** it maintains state and fires triggers. It does not reason, route, decide,
 or query the graph.
 
-[ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/ALTO-INTERIORITY-MAP.md) names this loop **the master
+[ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/ALTO-INTERIORITY-MAP.md) names this loop **the master
 dependency**: affect-as-state, involuntary surfacing, felt time, anticipation, wondering,
 sleep and dreaming are all facets or outputs of it, so until it exists each of them has
 nowhere to live.
 
 ## What exists today
 
-[`src/alto/read/subconscious.py`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/read/subconscious.py) is **not** that loop, and
+[`src/alto/read/subconscious.py`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/read/subconscious.py) is **not** that loop, and
 its own docstring says so in the first sentence. It is a state-decay tick: a daemon thread
 (`SubconsciousLoop`, subconscious.py:113) that every `tick_seconds` reads the singleton
 baseline and the active injections, calls the pure math in
-[`affect_state.py`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/read/affect_state.py) (`resolve_state`, affect_state.py:119)
+[`affect_state.py`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/read/affect_state.py) (`resolve_state`, affect_state.py:119)
 with a caller-owned `now`, and writes the resolved `{valence, energy}` back. It fires nothing.
 The split is deliberate — the loop owns the clock so a wrong turn-9 residue is diagnosable as
 either bad decay math or a tick that never fired, never both.
 
-Shipped configuration, read off [`src/config.yaml`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/config.yaml):
+Shipped configuration, read off [`src/config.yaml`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/config.yaml):
 `subconscious.enabled: true` (932), `tick_seconds: 5` (936), `salience.idle_tick.enabled: true`
 (961). So the tick **is** running in production, and so is the between-turn idle tick
-([`idle_tick.py`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/read/idle_tick.py), `IdleTickScheduler` at idle_tick.py:143)
+([`idle_tick.py`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/read/idle_tick.py), `IdleTickScheduler` at idle_tick.py:136)
 that fires one un-cued intrusion per idle window.
 
-The mechanism is measured, not asserted. [`scripts/subconscious_sim/PRE-REGISTRATION.md`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/scripts/subconscious_sim/PRE-REGISTRATION.md)
+The mechanism is measured, not asserted. [`scripts/subconscious_sim/PRE-REGISTRATION.md`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/scripts/subconscious_sim/PRE-REGISTRATION.md)
 froze the decay curve *before* running, with a null arm; the run passed against real Postgres,
 the real tick thread and a real clock — a turn-3 injection still tilted turn-9 valence to
 −0.097, matching the closed form, null arm flat
-([_HANDOFF-2026-07-23-affect-causal-wire.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/handoff/_HANDOFF-2026-07-23-affect-causal-wire.md)).
+([_HANDOFF-2026-07-23-affect-causal-wire.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/handoff/_HANDOFF-2026-07-23-affect-causal-wire.md)).
 That is pillar 2's own test passing at the mechanism level.
 
 **The spine is broken at both ends, and it is worth being exact about which end.**
 
 *No producer.* `writer.affect_enabled` is `false` (config.yaml:511), so `_run_affect` returns
-immediately ([`writer.py`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/write/writer.py):563) and nothing mints new injections
+immediately ([`writer.py`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/write/writer.py):563) and nothing mints new injections
 on the live path. The config comment states the consequence itself: once the existing
 injections decay, the idle-render path has nothing emotionally live to seed from and goes
 quiet. It was turned off on 2026-08-15 for a stated reason — asking a 3B how a moment felt,
 from a transcript of what the *speaker* said, is inference the writer is forbidden to do.
 
 *No consumer of the loop's output.* `get_current_affect_state()`
-([`alto/brain/store.py`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/brain/store.py):2108) is called from the three sims
-under [`scripts/subconscious_sim/`](https://github.com/sawyerstrong/alto/tree/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/scripts/subconscious_sim) and from [`test_alto_subconscious.py`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/tests/test_alto_subconscious.py) — and nowhere in the
+([`alto/brain/store.py`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/brain/store.py):2108) is called from the three sims
+under [`scripts/subconscious_sim/`](https://github.com/sawyerstrong/alto/tree/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/scripts/subconscious_sim) and from [`test_alto_subconscious.py`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/tests/test_alto_subconscious.py) — and nowhere in the
 pipeline. Note the near-miss: the idle tick *is* affect-driven, but it seeds from
-`affect_charged_seeds` ([`spread.py`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/read/spread.py):334), which ranks charged
+`affect_charged_seeds` ([`spread.py`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/read/spread.py):334), which ranks charged
 *episode nodes* in the graph cache. It never reads the live resolved state the tick writes.
 So affect is computed, persisted and decayed into a vacuum.
 
@@ -112,7 +112,7 @@ Surfacer's only input. They are near-opposites:
 | Cognition | never reasons or decides | runs a model |
 | Output | state and signals — numbers | first-person language |
 
-[`alto-subconscious.md`](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/systems/alto-subconscious.md) is emphatic: reading the graph *"requires cognition… a direct DB
+[`alto-subconscious.md`](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/systems/alto-subconscious.md) is emphatic: reading the graph *"requires cognition… a direct DB
 connection would smuggle a second cognitive layer in through the data-access door."* The
 Surfacer does exactly that, legitimately, because rendering thought *is* cognition. Merge them
 and the Subconscious stops being a substrate.
@@ -139,7 +139,7 @@ disagreement with the design.
 
 This is designed-but-unbuilt, not unimagined: every facet above has a decided design doc
 behind it, listed in the maturity ledger in
-[ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/ALTO-INTERIORITY-MAP.md). The gate is build capacity.
+[ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/ALTO-INTERIORITY-MAP.md). The gate is build capacity.
 
 Two specific things to know before you touch this. First, the next increment is already
 chosen and pre-registered: the **causal wire** — make the surfacing/share threshold a
@@ -159,11 +159,11 @@ wrong in one direction and, on the triggers, still right.
 
 ## Sources
 
-- [docs/systems/alto-subconscious.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/systems/alto-subconscious.md) — the design of record
-- [docs/ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/ALTO-INTERIORITY-MAP.md) — master dependency, maturity ledger, the three reconciliations
-- [docs/identity/alto-emotional-state.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/identity/alto-emotional-state.md) — the emotional-state facet and the threshold design
-- [docs/specs/v3/SPEC-salience-idle-render.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/specs/v3/SPEC-salience-idle-render.md) · [SPEC-subconscious-salience-surfacing.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/specs/v3/SPEC-subconscious-salience-surfacing.md)
-- [docs/handoff/_HANDOFF-2026-07-23-affect-causal-wire.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/handoff/_HANDOFF-2026-07-23-affect-causal-wire.md) — what was built and proven, and the next increment
-- [src/alto/read/subconscious.py](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/read/subconscious.py) · [affect_state.py](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/read/affect_state.py) · [idle_tick.py](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/read/idle_tick.py) · [spread.py](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/alto/read/spread.py)
-- [src/scripts/subconscious_sim/PRE-REGISTRATION.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/scripts/subconscious_sim/PRE-REGISTRATION.md) · [run_sim.py](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/src/scripts/subconscious_sim/run_sim.py)
-- [docs/CHECKS-measurement.md](https://github.com/sawyerstrong/alto/blob/6dd76f36d0ea672be82fedfd9d32cb0d4208afd9/docs/CHECKS-measurement.md) — before quoting any number above
+- [docs/systems/alto-subconscious.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/systems/alto-subconscious.md) — the design of record
+- [docs/ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/ALTO-INTERIORITY-MAP.md) — master dependency, maturity ledger, the three reconciliations
+- [docs/identity/alto-emotional-state.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/identity/alto-emotional-state.md) — the emotional-state facet and the threshold design
+- [docs/specs/v3/SPEC-salience-idle-render.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/specs/v3/SPEC-salience-idle-render.md) · [SPEC-subconscious-salience-surfacing.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/specs/v3/SPEC-subconscious-salience-surfacing.md)
+- [docs/handoff/_HANDOFF-2026-07-23-affect-causal-wire.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/handoff/_HANDOFF-2026-07-23-affect-causal-wire.md) — what was built and proven, and the next increment
+- [src/alto/read/subconscious.py](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/read/subconscious.py) · [affect_state.py](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/read/affect_state.py) · [idle_tick.py](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/read/idle_tick.py) · [spread.py](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/alto/read/spread.py)
+- [src/scripts/subconscious_sim/PRE-REGISTRATION.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/scripts/subconscious_sim/PRE-REGISTRATION.md) · [run_sim.py](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/src/scripts/subconscious_sim/run_sim.py)
+- [docs/CHECKS-measurement.md](https://github.com/sawyerstrong/alto/blob/3c382612b8b85cebbe991d8b5fcd53bc793e6a8a/docs/CHECKS-measurement.md) — before quoting any number above
