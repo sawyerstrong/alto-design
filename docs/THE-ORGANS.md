@@ -45,7 +45,7 @@ code Intake was deleted on 2026-10-04 and every organ reads the raw words — se
 structural rather than instructed. The Writer is a **sibling, not a
 subordinate**, hanging off that fan-out on the cold path. And the design has **one door into
 memory**: nothing reaches long-term storage around the shared read layer. (Built, that door is
-two — see [Retrieval](organs/retrieval.md).) Integration is not a client of it: memory
+`mem` — see [Retrieval](organs/retrieval.md).) Integration is not a client of it: memory
 reaches Integration only as thoughts the Surfacer renders.
 
 ---
@@ -56,18 +56,18 @@ reaches Integration only as thoughts the Surfacer renders.
 |---|---|---|
 | [Perception](organs/perception.md) | a layer of modality modules; signal → raw symbols | hearing built; vision designed at the interface |
 | [Intake](organs/intake.md) | raw symbols → a faithful grounded percept | removed 2026-10-04; perception's model-free `hear` stands in |
-| [Subconscious](organs/subconscious.md) | continuous endogenous state; salience to the Surfacer, steering into Integration | decay tick only — the loop is the master dependency |
+| [Subconscious](organs/subconscious.md) | continuous endogenous state; salience to the Surfacer, steering into Integration | not running — the earlier substrate is archived; to be rebuilt on `mem` |
 | [Integration](organs/integration.md) | the one conscious locus: thinks, forms intentions | the organ runs; the layer around it does not, so it is exposed |
 | [Surfacer](organs/surfacer.md) | machinery → first-person thought, *up* | rendering half only; reads `alto_mem` |
 | [Renderer](organs/renderer.md) | picks up Integration's spoken words and says them — a shell until there is a tone organ | built and on |
 | [Action organ](organs/action.md) | intent → validated device calls | sketched; the channel into it ships |
 | [Processing](organs/processing.md) | reasons on demand, returns conclusions | only the web-search seam |
-| [Writer](organs/writer.md) | persists experience to memory, mood-blind | recorder built; most of it switched off |
-| [Retrieval](organs/retrieval.md) | the shared read layer, activation, and what memory holds | two read paths: the graph reader is dark, `mem.read` is on |
+| [Writer](organs/writer.md) | persists experience to memory, mood-blind | `mem`'s recorder runs every turn; enrichment is a batch job |
+| [Retrieval](organs/retrieval.md) | the shared read layer, activation, and what memory holds | one store, `mem`, read by cue; no spreading activation yet |
 | [Identity](organs/identity.md) | the cold-start self, accreted through testimony | working |
 
 Two of these are not boxes in the overview, deliberately. **Identity** is not a component —
-it appears only as the self-node inside the graph, which is the claim. **Processing** is below
+it appears only as the self inside memory (the self-node of the design), which is the claim. **Processing** is below
 the altitude of an orientation map; it has a page. The guard on the device path has no page of
 its own: it is described in the [Action organ](organs/action.md).
 
@@ -96,5 +96,5 @@ concluding something is undesigned, read its page.
 | What does a word mean here? | [GLOSSARY.md](GLOSSARY.md) |
 
 Pages cite code, specs, dated records and pull requests by path. Each citation that exists in
-the private repository, at commit `7a50692a`, links to it there. Those links open only if
+the private repository, at commit `29183d96`, links to it there. Those links open only if
 you are signed in to GitHub with access to that repository; anyone else gets a 404.
