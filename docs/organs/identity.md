@@ -1,6 +1,6 @@
 # Identity — the self
 
-> **Path:** cold (written) · hot (read) · **Status:** working at the identity tier on `mem`; the recombination tier unbuilt · **Code:** [`src/mem/selfname.py`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/mem/selfname.py), [`src/mem/surfacer_store.py`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/mem/surfacer_store.py), [`src/mem/surfaces.py`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/mem/surfaces.py), [`src/alto/read/surfacing/surfacer.py`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/alto/read/surfacing/surfacer.py)
+> **Path:** cold (written) · hot (read) · **Status:** working at the identity tier on `mem`; the recombination tier unbuilt · **Code:** [`src/mem/selfname.py`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/mem/selfname.py), [`src/mem/surfacer_store.py`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/mem/surfacer_store.py), [`src/mem/surfaces.py`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/mem/surfaces.py), [`src/alto/read/surfacing/surfacer.py`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/alto/read/surfacing/surfacer.py)
 
 Alto does not know its own name until someone tells it. Identity is not a persona written
 into a prompt or trained into an adapter — it is a node that **boots empty** and
@@ -14,11 +14,11 @@ This is where things get maybe a bit too wonky. And a commercial product **Defin
 
 On the **write** side, nothing writes identity as a fact. Every utterance is kept in `mem` as
 testimony, and Alto's name is *derived* from that testimony on read
-([`mem/selfname.py`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/mem/selfname.py), below). The AGE-graph self-node and the
+([`mem/selfname.py`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/mem/selfname.py), below). The AGE-graph self-node and the
 resolver detectors that wrote into it are archived at tag `archive/age-brain-2026-10-11`.
 
 On the **read** side, the Surfacer takes the self node (`mem`'s `__self__` surface) as its **POV
-anchor** — it refuses to construct without one. [`alto/read/surfacing/verify/`](https://github.com/sawyerstrong/alto/tree/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/alto/read/surfacing/verify) reads the same earned
+anchor** — it refuses to construct without one. [`alto/read/surfacing/verify/`](https://github.com/sawyerstrong/alto/tree/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/alto/read/surfacing/verify) reads the same earned
 name to decide how to attribute a clause.
 
 Nothing else consumes identity directly, because there is nowhere else for it to go:
@@ -29,7 +29,7 @@ frozen LoRA and surfaced thoughts. Identity reaches behaviour through the Surfac
 
 Three specs, in build order.
 
-[SPEC-writer-self-node.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/specs/v1/SPEC-writer-self-node.md) (implemented on the AGE graph,
+[SPEC-writer-self-node.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/specs/v1/SPEC-writer-self-node.md) (implemented on the AGE graph,
 now archived; the design stands for the rebuild on `mem`)
 establishes the `self_attr` substrate: the self boots empty, learned facts attach as separate
 attribute nodes under five typed slots — `identity`, `architecture`, `belief`, `norm`,
@@ -44,67 +44,67 @@ not just write a system prompt?" does not apply here: the conversational call ha
 system prompt by design, so the self-model is not competing with a system prompt — it is the
 **replacement** for one, and the only per-user, inspectable, no-retrain channel available.
 
-[SPEC-speaker-identity.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/specs/v1/SPEC-speaker-identity.md) (DESIGN v1, 2026-07-20)
+[SPEC-speaker-identity.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/specs/v1/SPEC-speaker-identity.md) (DESIGN v1, 2026-07-20)
 removes the last privileged node. The shipped "operator" was earned but *special* — one
 deterministically-keyed person node every organ reached for by slug. It is replaced by a
 generic **current speaker**: unknown until it identifies itself, named when a name is stated,
 reconciled with an existing person when they turn out to be the same. `self` goes back to
 meaning only Alto.
 
-[SPEC-self-schema-event-model.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/specs/v1/SPEC-self-schema-event-model.md) (DESIGN)
+[SPEC-self-schema-event-model.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/specs/v1/SPEC-self-schema-event-model.md) (DESIGN)
 adds the relational backbone: identity is relational and attributive, not episodic — what it
 is (`is_a`), who made it (a reified creation event), who it serves. The longer-run identity
-stack, **Nature → Dispositions → Beliefs**, is indexed in [docs/README.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/README.md).
+stack, **Nature → Dispositions → Beliefs**, is indexed in [docs/README.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/README.md).
 
 ## What exists today
 
 The cold-start property is enforced at the seed. `mem` inserts two sentinel surfaces, `__self__`
-and `__speaker__`, both `referential` and both unnamed ([`src/mem/schema.sql:142-143`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/mem/schema.sql#L142-L143)).
+and `__speaker__`, both `referential` and both unnamed ([`src/mem/schema.sql:142-143`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/mem/schema.sql#L142-L143)).
 `first_seen_at` is 0 because they precede all testimony rather than being first seen in it. No name
 is seeded, and no row asserts that a particular person exists before anyone has spoken.
 
 **Alto's name comes from testimony, re-read at each episode start.** The Surfacer holds the
-self node (`SurfacerIdentity`, [`src/alto/read/surfacing/identity.py`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/alto/read/surfacing/identity.py)) and re-reads it when a turn
+self node (`SurfacerIdentity`, [`src/alto/read/surfacing/identity.py`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/alto/read/surfacing/identity.py)) and re-reads it when a turn
 opens an episode (no spoken turn inside the idle gap).
-`MemSurfacerStore.get_self_node` ([`src/mem/surfacer_store.py:264`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/mem/surfacer_store.py#L264)) builds that node from the
+`MemSurfacerStore.get_self_node` ([`src/mem/surfacer_store.py:264`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/mem/surfacer_store.py#L264)) builds that node from the
 `__self__` surface, and `_singleton` (`:297`) names it with `selfname.self_name_from_testimony`
-([`src/mem/selfname.py:74`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/mem/selfname.py#L74)). Every percept prompt carries one identity line made from it: the name,
+([`src/mem/selfname.py:74`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/mem/selfname.py#L74)). Every percept prompt carries one identity line made from it: the name,
 or "nobody has told me my name yet", and no other self fact. The line is context, not a licensed
 source, so a render that states the name is dropped by the verifier for now. `mem` keys surfaces by
 their case-folded norm, so "Your name is Juno" names Alto `juno`. A name given today reaches the
 next episode only after an enrichment batch has minted it (`mem.enrich` is off). Pinned by
-[`src/tests/test_alto_self_identity.py`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/tests/test_alto_self_identity.py) (live) and [`src/tests/test_alto_surfacer_identity.py`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/tests/test_alto_surfacer_identity.py).
+[`src/tests/test_alto_self_identity.py`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/tests/test_alto_self_identity.py) (live) and [`src/tests/test_alto_surfacer_identity.py`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/tests/test_alto_surfacer_identity.py).
 
 **The speaker stays a nameless referent.** `get_current_speaker_name`
-([`src/mem/surfacer_store.py:274`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/mem/surfacer_store.py#L274)) reads the `__speaker__` surface through the same `_singleton`,
+([`src/mem/surfacer_store.py:274`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/mem/surfacer_store.py#L274)) reads the `__speaker__` surface through the same `_singleton`,
 but only the self branch derives a name (`:309-313`), so the speaker's name is `None` in this
 build. The render then addresses the speaker in second person or as "the speaker" and asserts no
 identity. Naming the speaker from testimony is the missing half of
-[SPEC-speaker-identity.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/specs/v1/SPEC-speaker-identity.md) on `mem`.
+[SPEC-speaker-identity.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/specs/v1/SPEC-speaker-identity.md) on `mem`.
 
 **Reads defend the cold-start state rather than paper over it.** The Surfacer takes
 `get_self_node()` as its POV anchor and raises without one
-([`surfacer.py`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/alto/read/surfacing/surfacer.py):253). The speaker's earned name is read through
+([`surfacer.py`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/alto/read/surfacing/surfacer.py):253). The speaker's earned name is read through
 `get_current_speaker_name` and is `None` while they are still a nameless referent
-([`src/alto/read/surfacing/speaker.py:24`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/alto/read/surfacing/speaker.py#L24), resolved lazily at 18-27); the cache starts as `None`, the honest
-cold-start state ([`speaker.py:15`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/alto/read/surfacing/speaker.py#L15)). In
-[`verify/lexicon.py`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/alto/read/surfacing/verify/lexicon.py):32, `None`, blank and non-string
+([`src/alto/read/surfacing/speaker.py:24`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/alto/read/surfacing/speaker.py#L24), resolved lazily at 18-27); the cache starts as `None`, the honest
+cold-start state ([`speaker.py:15`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/alto/read/surfacing/speaker.py#L15)). In
+[`verify/lexicon.py`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/alto/read/surfacing/verify/lexicon.py):32, `None`, blank and non-string
 all mean *still a nameless referent*, and that is what routes the render to second person
 instead of asserting an identity. There is a deliberate asymmetry to know about: a hard-coded
-`OPERATOR_NAME = "Sawyer"` survives at [`src/alto/read/surfacing/verify/lexicon.py:28`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/alto/read/surfacing/verify/lexicon.py#L28) as a legacy **recognizer** only —
+`OPERATOR_NAME = "Sawyer"` survives at [`src/alto/read/surfacing/verify/lexicon.py:28`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/alto/read/surfacing/verify/lexicon.py#L28) as a legacy **recognizer** only —
 a recognizer that is wrong costs a missed detection; a generator that is wrong states a
 falsehood about a person.
 
-**A corpus bug recorded in the map is closed.** [ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/ALTO-INTERIORITY-MAP.md)
+**A corpus bug recorded in the map is closed.** [ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/ALTO-INTERIORITY-MAP.md)
 reconciliation #2 (2026-07-22) reports the identity-probe corpus leaking facts into weights —
 `fc_id_002`/`fc_id_003` asserting the name *and its provenance* on an empty context. In the
 corpus the shipped model was trained on
-([`lora_train.v6.jsonl`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/research/lora_training/integration_v1/lora_train.v6.jsonl)) those
+([`lora_train.v6.jsonl`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/research/lora_training/integration_v1/lora_train.v6.jsonl)) those
 rows now defer: "Nothing set on my end. What've you been calling me?" and "Not one I can point
 to." Verified by reading the file. The map's entry is stale on this point.
 
 **How `mem` derives the name.**
-[`mem/selfname.py`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/mem/selfname.py) derives what Alto was told its name is from
+[`mem/selfname.py`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/mem/selfname.py) derives what Alto was told its name is from
 testimony on every read. There is no `self_name` table and no config key: either would be a value
 that outlives its evidence, and a config key would be the trained self-description pillar 4 rules
 out, filed under ops. It matches four second-person phrasings on the `speaker` axis ("your name is
@@ -112,7 +112,7 @@ X", "you're called X", "I'll call you X" and their kin), and a candidate counts 
 already minted it as a referential surface — so a bad pattern can fail to find a name and cannot
 invent one. What comes back is a `SelfName` with its receipt (the segment and the evidence) and an
 `n_candidates`, so being renamed is surfaced rather than resolved silently. It feeds pronoun binding
-when an episode closes ([`src/mem/worker.py:61`](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/mem/worker.py#L61)), the read side, where a cue naming Alto reaches
+when an episode closes ([`src/mem/worker.py:61`](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/mem/worker.py#L61)), the read side, where a cue naming Alto reaches
 Alto's own self, and the name the surfacer's identity line carries, re-read at each episode start
 (perception reads no name). The module calls its closed
 pattern list a deliberate limit: if it has to grow past a handful, that is evidence the approach is
@@ -129,7 +129,7 @@ little else.
 
 Two smaller gaps, both designed-but-unbuilt rather than unimagined. The speaker's name has no
 producer on `mem` (above), and name-collision reconciliation is charged to
-[SPEC-consolidation-loop.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/specs/v3/SPEC-consolidation-loop.md), which is neither built nor
+[SPEC-consolidation-loop.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/specs/v3/SPEC-consolidation-loop.md), which is neither built nor
 currently spec'd for it.
 
 Embodiment awareness — no body, no senses — is part of this self-model under pillar 4 and is
@@ -145,8 +145,8 @@ the one piece already proven in the adapter: the v6 retrain's `self_schema` thou
 
 ## Sources
 
-- [docs/specs/v1/SPEC-writer-self-node.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/specs/v1/SPEC-writer-self-node.md) · [SPEC-speaker-identity.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/specs/v1/SPEC-speaker-identity.md) · [SPEC-self-schema-event-model.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/specs/v1/SPEC-self-schema-event-model.md)
-- [docs/identity/alto-self-knowledge.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/identity/alto-self-knowledge.md) · [alto-nature.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/identity/alto-nature.md) — the Nature → Dispositions → Beliefs stack
-- [docs/ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/ALTO-INTERIORITY-MAP.md) — reconciliation #2, and the ledger rows for the self-node and the nameless speaker
-- [docs/systems/alto-honesty-invariant.md](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/docs/systems/alto-honesty-invariant.md)
-- [mem/selfname.py](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/mem/selfname.py) · [surfacer.py](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/alto/read/surfacing/surfacer.py) · [verify/](https://github.com/sawyerstrong/alto/blob/29183d968caa3fe32e396fd3b7caddcbdc273abb/src/alto/read/surfacing/verify/__init__.py)
+- [docs/specs/v1/SPEC-writer-self-node.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/specs/v1/SPEC-writer-self-node.md) · [SPEC-speaker-identity.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/specs/v1/SPEC-speaker-identity.md) · [SPEC-self-schema-event-model.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/specs/v1/SPEC-self-schema-event-model.md)
+- [docs/identity/alto-self-knowledge.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/identity/alto-self-knowledge.md) · [alto-nature.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/identity/alto-nature.md) — the Nature → Dispositions → Beliefs stack
+- [docs/ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/ALTO-INTERIORITY-MAP.md) — reconciliation #2, and the ledger rows for the self-node and the nameless speaker
+- [docs/systems/alto-honesty-invariant.md](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/docs/systems/alto-honesty-invariant.md)
+- [mem/selfname.py](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/mem/selfname.py) · [surfacer.py](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/alto/read/surfacing/surfacer.py) · [verify/](https://github.com/sawyerstrong/alto/blob/101ab5a67083c25533b3ebc27e5f9fb1acfa5e6e/src/alto/read/surfacing/verify/__init__.py)
