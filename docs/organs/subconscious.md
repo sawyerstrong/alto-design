@@ -15,7 +15,7 @@ This is basically the engine that runs the Surfacer when nothing else is going o
 
 It is not a pipeline stage. Every other organ takes input from one neighbour and passes
 output to the next; the Subconscious runs continuously and in parallel underneath all of
-them ([alto-subconscious.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/systems/alto-subconscious.md), "Not a Pipeline Stage").
+them ([alto-subconscious.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/systems/alto-subconscious.md), "Not a Pipeline Stage").
 
 It **consumes** percepts from Intake — which in the design fans out in parallel to the
 Subconscious (to feel), Integration (to attend) and the Writer (to record) — plus a hardware
@@ -35,7 +35,7 @@ but never supplies content, because the Writer must stay blind to live mood.
 
 ## The intended design
 
-The canonical design is [alto-subconscious.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/systems/alto-subconscious.md). The
+The canonical design is [alto-subconscious.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/systems/alto-subconscious.md). The
 mature organ maintains eight facets of *one* state: an emotional vector (valence, energy,
 stability, focus); the injection system that spikes it; anticipation (held future events with
 affective charge); felt time from event density; cognitive proprioception (the felt fluency
@@ -54,7 +54,7 @@ involves nothing to interpret.
 **The one rule:** it maintains state and fires triggers. It does not reason, route, decide,
 or query the graph.
 
-[ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/ALTO-INTERIORITY-MAP.md) names this loop **the master
+[ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/ALTO-INTERIORITY-MAP.md) names this loop **the master
 dependency**: affect-as-state, involuntary surfacing, felt time, anticipation, wondering,
 sleep and dreaming are all facets or outputs of it, so until it exists each of them has
 nowhere to live.
@@ -69,14 +69,14 @@ affect assessor and the idle tick lived on the AGE graph; that implementation is
 affect it would have seeded from.
 
 The one thing that still touches affect is on the reply path. With no affect state, the
-affect-suppression directive arms on every turn ([`src/alto/runtime/reply_guards.py:28`](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/src/alto/runtime/reply_guards.py#L28)): with no
+affect-suppression directive arms on every turn ([`src/alto/runtime/reply_guards.py:28`](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/src/alto/runtime/reply_guards.py#L28)): with no
 felt state to speak from, Alto is told not to claim one. That is pillar 3 holding while pillar 2 is unbuilt.
 
 The rebuild is on the roadmap, under "Rebuild on mem" in
-[BUILD-ORDER.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/roadmap/BUILD-ORDER.md): affect state on `mem` (pillar 2), idle intrusion
+[BUILD-ORDER.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/roadmap/BUILD-ORDER.md): affect state on `mem` (pillar 2), idle intrusion
 and between-turn surfacing on `mem` (pillar 1), and spreading activation on `mem` (pillar 5). All
 three are designed and not started. The pre-registered decay measurement
-([PRE-REGISTRATION.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/src/scripts/subconscious_sim/PRE-REGISTRATION.md)) is the
+([PRE-REGISTRATION.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/src/scripts/subconscious_sim/PRE-REGISTRATION.md)) is the
 standard the rebuild has to meet again.
 
 ## Not the same organ as the Surfacer
@@ -91,7 +91,7 @@ Surfacer's only input. They are near-opposites:
 | Cognition | never reasons or decides | runs a model |
 | Output | state and signals — numbers | first-person language |
 
-[`alto-subconscious.md`](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/systems/alto-subconscious.md) is emphatic: reading the graph *"requires cognition… a direct DB
+[`alto-subconscious.md`](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/systems/alto-subconscious.md) is emphatic: reading the graph *"requires cognition… a direct DB
 connection would smuggle a second cognitive layer in through the data-access door."* The
 Surfacer does exactly that, legitimately, because rendering thought *is* cognition. Merge them
 and the Subconscious stops being a substrate.
@@ -115,7 +115,7 @@ activation/restlessness — and therefore no triggers, which is half of what the
 for.
 
 This is designed-but-unbuilt, not unimagined: every facet above has a decided design doc behind it,
-listed in the maturity ledger in [ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/ALTO-INTERIORITY-MAP.md). The gate
+listed in the maturity ledger in [ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/ALTO-INTERIORITY-MAP.md). The gate
 is build capacity.
 
 Two things to know before you touch this. First, the first increment the design chose is the
@@ -134,11 +134,11 @@ surfacing) stays open until spreading activation is rebuilt.
 
 ## Sources
 
-- [docs/systems/alto-subconscious.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/systems/alto-subconscious.md) — the design of record
-- [docs/ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/ALTO-INTERIORITY-MAP.md) — master dependency, maturity ledger, the three reconciliations
-- [docs/identity/alto-emotional-state.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/identity/alto-emotional-state.md) — the emotional-state facet and the threshold design
-- [docs/specs/v3/SPEC-salience-idle-render.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/specs/v3/SPEC-salience-idle-render.md) · [SPEC-subconscious-salience-surfacing.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/specs/v3/SPEC-subconscious-salience-surfacing.md)
-- [docs/handoff/_HANDOFF-2026-07-23-affect-causal-wire.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/handoff/_HANDOFF-2026-07-23-affect-causal-wire.md) — what was built and proven on the archived substrate, and the next increment
-- [src/scripts/subconscious_sim/PRE-REGISTRATION.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/src/scripts/subconscious_sim/PRE-REGISTRATION.md) — the pre-registered decay measurement
-- [docs/roadmap/BUILD-ORDER.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/roadmap/BUILD-ORDER.md) — "Rebuild on mem"
-- [docs/CHECKS-measurement.md](https://github.com/sawyerstrong/alto/blob/479298a4a46a4f8f44537be57d1d7052ae48d930/docs/CHECKS-measurement.md) — before quoting any number above
+- [docs/systems/alto-subconscious.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/systems/alto-subconscious.md) — the design of record
+- [docs/ALTO-INTERIORITY-MAP.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/ALTO-INTERIORITY-MAP.md) — master dependency, maturity ledger, the three reconciliations
+- [docs/identity/alto-emotional-state.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/identity/alto-emotional-state.md) — the emotional-state facet and the threshold design
+- [docs/specs/v3/SPEC-salience-idle-render.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/specs/v3/SPEC-salience-idle-render.md) · [SPEC-subconscious-salience-surfacing.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/specs/v3/SPEC-subconscious-salience-surfacing.md)
+- [docs/handoff/_HANDOFF-2026-07-23-affect-causal-wire.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/handoff/_HANDOFF-2026-07-23-affect-causal-wire.md) — what was built and proven on the archived substrate, and the next increment
+- [src/scripts/subconscious_sim/PRE-REGISTRATION.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/src/scripts/subconscious_sim/PRE-REGISTRATION.md) — the pre-registered decay measurement
+- [docs/roadmap/BUILD-ORDER.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/roadmap/BUILD-ORDER.md) — "Rebuild on mem"
+- [docs/CHECKS-measurement.md](https://github.com/sawyerstrong/alto/blob/fcfdb827563b883d7f0701d5b2501923d35a8311/docs/CHECKS-measurement.md) — before quoting any number above
